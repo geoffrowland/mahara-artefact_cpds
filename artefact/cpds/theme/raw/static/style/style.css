@@ -1,0 +1,39 @@
+/**
+ * CSS rules for the resume artefact plugin
+ *
+ * Copyright (C) 2006-2009 Catalyst IT
+ * This file is distributed under the same terms as Mahara itself
+ */
+th.cpdscontrols {
+    width: 50px; !important;
+}
+
+#cpdswrap table {
+	width: 100%;
+}
+
+#cpdswrap table td {
+    text-align: left
+}
+
+#cpdswrap table th {
+	text-align: left;
+	padding: 0.25em;
+}
+
+#container #cpdswrap table td.errmsg {
+   padding-left: 2em;
+}
+
+fieldset legend.cpdsh3 a {
+	background: none;
+	padding: 0;
+}
+
+ul.cpdslist {
+	margin: 0;
+}
+ul.cpdslist li {
+	list-style: none;
+	margin: 0 0 0.25em;
+}
