@@ -1,0 +1,29 @@
+Plugin for adding a Continuing Professional Development log to Mahara
+
+Many programmes of study, careers and professions have an expectation or obligation of Continuing Professional Development (CPD). For example, in the UK Further Education (FE) and Skills sector, the Institute for Learning (IfL) has a requirement that its members commit to at least 30 hours of CPD (or pro-rata for part-time teachers or trainers).
+
+This Mahara plugin allows a simple log of CPD activity to be maintained. It includes fields for the start date, end date (if appropriate) title, location and description of the CPD acitivity together with the time spent (hours). Also, a rolling total of time spent on CPD is calculated.
+
+One rationale for this plugin was that if lecturers found Mahara useful to record and reflect upon their own CPD, they would be more likely to use it with their students.
+
+The CPD can be added to a Mahara view which can also include related resources and artefacts e.g. a blog reflecting in more detail on particular aspects of the CPD. 
+
+The plugin allows a user to have multiple instances of CPD. So, a user can start a new CPD for each academic year or have a dedicated CPD for a particular programme of study. 
+
+The plugin adds a new 'My CPD' tab (similar to 'My Plans') to 'My Portfolio' in Mahara. Indeed, the code was based on 'My Plans' and was initially developed by James Kerrigan, one of the students on the Foundation degree in Computing and Internet Technology at the University Centre Yeovil.
+
+It is possible to export a View containing a CPD as a standalone HTML Website. The code to export in Leap2A format is in place, but has not been tested.
+
+Installation
+
+The plugin is currently available from GitHub.
+
+https://github.com/geoffrowland/mahara-artefact_cpds
+
+Download, unpack and copy the /cpds folder (and included files and folders) into the /artefact folder of your Mahara installation. Then enable the cpds and activities from the Plugin Administration interface.
+
+The plugin should work with any Mahara 1.3.x installation. It creates a new artefact_cpds_activity table which is a 1:1 extension of the artefact table. Please test it on a development installation before production deployment.
+
+If it is of interest and receives approval from the Mahara developers, I'll add it to the Mahara Plugins Wiki.
+
+Enjoy
