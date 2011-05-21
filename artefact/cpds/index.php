@@ -28,7 +28,13 @@
 
 
 define('INTERNAL', 1);
-define('MENUITEM', 'myportfolio/cpds');
+//require(get_config('docroot') . 'lib/version.php');
+//$release = $config->release;
+//if ($release < 1.4) {
+// define('MENUITEM', 'myportfolio/cpds');
+//} else {
+      define('MENUITEM', 'content/cpds');
+//}
 define('SECTION_PLUGINTYPE', 'artefact');
 define('SECTION_PLUGINNAME', 'cpds');
 define('SECTION_PAGE', 'index');

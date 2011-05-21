@@ -45,14 +45,14 @@ class PluginArtefactcpds extends PluginArtefact {
     }
 
     public static function menu_items() {
-        return array(
-            array(
-                'path' => 'myportfolio/cpds',
-                'url'  => 'artefact/cpds/',
-                'title' => get_string('mycpds', 'artefact.cpds'),
-                'weight' => 40,
+          return array(
+            array(       	
+                    'path' => 'content/cpds',
+                    'title' => get_string('cpds', 'artefact.cpds'),
+                    'url'  => 'artefact/cpds/',
+                    'weight' => 40,
             ),
-        );
+          );
     }
 
 }

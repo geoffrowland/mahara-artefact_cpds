@@ -7,8 +7,9 @@
             <td class="c3">{$activity->title} at {$activity->location}</td>
             <td class="c5">{$activity->description}</td>
             <td class="c6" style="text-align:right">{$activity->hours}</td>
-            <td class="c7 s"><a href="{$WWWROOT}artefact/cpds/edit/activity.php?id={$activity->activity}" class="icon btn-edit">{str tag=edit}</a></td>
-            <td class="c8 s"><a href="{$WWWROOT}artefact/cpds/delete/activity.php?id={$activity->activity}" class="icon btn-del">{str tag=delete}</a></td>
+            <td class="c7 buttonscell"><a href="{$WWWROOT}artefact/cpds/edit/activity.php?id={$activity->activity}" title="{str tag=edit}"><img src="{theme_url filename='images/edit.gif'}" alt="{str tag=edit}"></a>
+            <a href="{$WWWROOT}artefact/cpds/delete/activity.php?id={$activity->activity}" title="{str tag=delete}"><img src="{theme_url filename='images/icon_close.gif'}" alt="{str tag=delete}"></a></td>
+
         </tr>
 {$totalhours = $totalhours + $activity->hours}
 {/foreach}

@@ -27,7 +27,7 @@
  */
 
 define('INTERNAL', true);
-define('MENUITEM', 'myportfolio/mycpds');
+define('MENUITEM', 'content/cpds');
 
 require_once(dirname(dirname(dirname(dirname(__FILE__)))) . '/init.php');
 require_once('pieforms/pieform.php');

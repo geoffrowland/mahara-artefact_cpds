@@ -5,7 +5,7 @@
  * This file is distributed under the same terms as Mahara itself
  */
 th.cpdscontrols {
-    width: 50px; !important;
+    width: 40px; !important;
 }
 
 #cpdswrap table {
@@ -22,7 +22,7 @@ th.cpdscontrols {
 }
 
 #container #cpdswrap table td.errmsg {
-   padding-left: 2em;
+   padding-left: 20px;
 }
 
 fieldset legend.cpdsh3 a {
@@ -35,5 +35,11 @@ ul.cpdslist {
 }
 ul.cpdslist li {
 	list-style: none;
-	margin: 0 0 0.25em;
+	margin: 0 0 3px 0;
+}
+.codesc {
+	font-size: .9167em;
+}
+#activitieslist td {
+	padding: 5px 5px 3px 5px;
 }
