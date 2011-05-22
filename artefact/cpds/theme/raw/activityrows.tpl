@@ -7,7 +7,7 @@
             <td class="c3"><a class="activity-title" href="">{$activity->title} at {$activity->location}</a>
             <div class="activity-desc hidden" id="activity-desc-{$activity->id}">{$activity->description}</div></td>
         {else}
-            <td class="c3">{$activity->title} at {$activity->location}</td>
+            <td class="c3">{$activity->title} {str tag='at' section='artefact.cpds'} {$activity->location}</td>
         {/if}
         <td class="c4" style="text-align:right">{$activity->hours}</td>
     </tr>
