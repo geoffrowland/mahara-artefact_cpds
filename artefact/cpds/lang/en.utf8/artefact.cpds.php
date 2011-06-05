@@ -35,7 +35,7 @@ $string['deletethiscpd'] = 'Delete CPD: \'%s\'';
 $string['editcpd'] = 'Edit CPD';
 $string['editingcpd'] = 'Editing CPD';
 $string['manageactivities'] = 'Manage activities';
-$string['mycpds'] = 'My CPD';
+$string['mycpds'] = 'Continuing Professional Development';
 $string['newcpd'] = 'New CPD';
 $string['nocpdsaddone'] = 'No CPD yet. %sAdd one%s!';
 $string['nocpds'] = 'No CPD to display';
@@ -58,13 +58,13 @@ $string['hours'] = 'Hours';
 $string['totalhours'] = 'Total hours';
 $string['startdate'] = 'Start Date';
 $string['enddate'] = 'End Date';
-$string['hoursdesc'] = 'Time spent on activity in hours, to one decimal place (e.g. 2.5 means 2 hr 30 min).';
+$string['hoursdesc'] = 'Time spent on activity in hours, to one decimal place (e.g. 2.5 represents 2 hr 30 min).';
 $string['deleteactivityconfirm'] = 'Are you sure you wish to delete this activity?';
 $string['deleteactivity'] = 'Delete activity';
 $string['deletethisactivity'] = 'Delete activity: \'%s\'';
 $string['editactivity'] = 'Edit activity';
 $string['editingactivity'] = 'Editing activity';
-$string['myactivities'] = 'My activities';
+$string['myactivities'] = 'Activities';
 $string['newactivity'] = 'New activity';
 $string['noactivities'] = 'No activities to display.';
 $string['noactivitiesaddone'] = 'No activities yet. %sAdd one%s!';
@@ -75,6 +75,5 @@ $string['activitydeletedsuccessfully'] = 'activity deleted successfully.';
 $string['activitiesavedsuccessfully'] = 'activity saved successfully.';
 $string['location'] = 'Location';
 $string['locationdesc'] = 'The location of the CPD activity.';
-
 
 ?>

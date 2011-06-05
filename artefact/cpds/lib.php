@@ -554,12 +554,11 @@ class ArtefactTypeActivity extends ArtefactType {
      *
      * @param limit how many activities to display per page
      * @param offset current page to display
-     * @return array (count: integer, data: array)
+     * @return array (grandtotalhours: number, count: integer, data: array)
      * 
      */
     public static function get_activities($cpd, $offset=0, $limit=20) {
-        $datenow = time(); // time now to use for formatting activities by completion
-
+       
         ($results = get_records_sql_array("
             SELECT a.id, at.artefact AS activity, at.location, at.hours, ".db_format_tsfield('startdate').", ".db_format_tsfield('enddate').",
                 a.title, a.description, a.parent
@@ -569,9 +568,11 @@ class ArtefactTypeActivity extends ArtefactType {
             ORDER BY at.startdate DESC", array($cpd), $offset, $limit))
             || ($results = array());
 
-        // format the date
+        // format the date and calculate grand total of hours spent
+        $grandtotalhours = 0;
         if (!empty($results)) {
             foreach ($results as $result) {
+            	 $grandtotalhours = $grandtotalhours + $result->hours;
                 if (!empty($result->startdate)) {
                     $result->startdate = strftime(get_string('strftimedate'), $result->startdate);
                     if (!empty($result->enddate)) {
@@ -582,6 +583,7 @@ class ArtefactTypeActivity extends ArtefactType {
         }
 
         $result = array(
+            'grandtotalhours' => $grandtotalhours,
             'count'  => count_records('artefact', 'artefacttype', 'activity', 'parent', $cpd),
             'data'   => $results,
             'offset' => $offset,

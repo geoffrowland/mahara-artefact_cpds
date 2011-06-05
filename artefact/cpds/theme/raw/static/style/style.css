@@ -1,5 +1,5 @@
 /**
- * CSS rules for the resume artefact plugin
+ * CSS rules for the cpds artefact plugin
  *
  * Copyright (C) 2006-2009 Catalyst IT
  * This file is distributed under the same terms as Mahara itself
@@ -13,11 +13,19 @@ th.cpdscontrols {
 }
 
 #cpdswrap table td {
-    text-align: left
+    text-align: left;
+}
+#cpdswrap table td.right {
+    text-align: right;
 }
 
 #cpdswrap table th {
 	text-align: left;
+	padding: 0.25em;
+}
+
+#cpdswrap table th.right {
+	text-align: right;
 	padding: 0.25em;
 }
 
@@ -41,5 +49,10 @@ ul.cpdslist li {
 	font-size: .9167em;
 }
 #activitieslist td {
-	padding: 5px 5px 3px 5px;
+	padding: 3px 5px 3px 5px;
+}
+.summaryhours {
+	border-style: solid;
+	border-width: 1px 0px 1px 0px;
+	border-color: #cccccc;	
 }

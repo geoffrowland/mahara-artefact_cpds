@@ -9,11 +9,11 @@
         {else}
             <td class="c3">{$activity->title} {str tag='at' section='artefact.cpds'} {$activity->location}</td>
         {/if}
-        <td class="c4" style="text-align:right">{$activity->hours}</td>
+        <td class="c4 right">{$activity->hours}</td>
     </tr>
 {$totalhours = $totalhours + $activity->hours}
 {/foreach}
 <tr></tr>
-<tr style="border-width: 1px 0px 1px 0px; border-style:solid; border-color:#cccccc;">
-<th class="c1"></th><th class="c2"></th><th class="c3" style="text-align:right; padding-right: 0.5em">{str tag='totalhours' section='artefact.cpds'}</th><td class="c4" style="text-align:right">{number_format($totalhours, 1)}</td>
+<tr class="summaryhours">
+<th colspan="3" class="right">{str tag='totalhours' section='artefact.cpds'}</th><td class="c4 right totalhours">{number_format($totalhours, 1)}</td>
 </tr>

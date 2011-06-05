@@ -4,7 +4,7 @@
             <th class="c1">{str tag='startdate' section='artefact.cpds'}</th>
             <th class="c2">{str tag='enddate' section='artefact.cpds'}</th>
             <th class="c3">{str tag='title' section='artefact.cpds'}</th>
-            <th class="c5">{str tag='hours' section='artefact.cpds'}</th>
+            <th class="c4 right">{str tag='hours' section='artefact.cpds'}</th>
         </tr>
     </thead>
     <tbody>
