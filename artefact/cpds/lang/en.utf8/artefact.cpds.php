@@ -52,6 +52,7 @@ $string['title'] = 'Title';
 $string['titledesc'] = 'The title will be used to display each activity in this CPD block.';
 
 /* activities */
+$string{'at'] = 'at';
 $string['allactivities'] = 'All activities';
 $string['hours'] = 'Hours';
 $string['totalhours'] = 'Total hours';
