@@ -12,7 +12,7 @@ The plugin allows a user to have multiple instances of CPD. So, a user can start
 
 The plugin adds a new 'CPD' ('My CPD' in Mahara 1.3), similar to 'Plans'('My Plans') to 'Portfolio' ('My Portfolio') in Mahara. Indeed, the code was based on 'Plans' and was initially developed by James Kerrigan, one of the students on the Foundation degree in Computing and Internet Technology at the University Centre Yeovil.
 
-It is possible to export s Page. or Pages, containing a CPD as HTML pages. 
+It is possible to export a Page. or Pages, containing a CPD as HTML pages. 
 
 It is also possible to import/export a CPD log logs using the Leap2A format allowing transfer between different Mahara installations or other Leap2A compliant ePortfolio systems.
 
@@ -20,7 +20,7 @@ The plugin is currently available from GitHub.
 
 https://github.com/geoffrowland/mahara-artefact_cpds
 
-Download, unpack and copy the /cpds folder (and included files and folders) into the /artefact folder of your Mahara installation. Then enable the cpds and activities from the Plugin Administration interface.
+Download, unpack and copy the /cpds folder (and included files and folders) into the /artefact folder of your Mahara installation. Then enable plugin type: artefact cpds afolloed by the plugintype: blocktype cpds/cpds from the Plugin Administration interface.
 
 The plugin has versions which work with any Mahara 1.3.x, 1.4.x or 1.5.x installation. It creates a new artefact_cpds_activity table which is a 1:1 extension of the artefact table. 
 
