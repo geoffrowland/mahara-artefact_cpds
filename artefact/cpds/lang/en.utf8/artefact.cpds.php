@@ -33,7 +33,6 @@ $string['deletecpdconfirm'] = 'Are you sure you wish to delete this CPD? Deletin
 $string['deletecpd'] = 'Delete CPD';
 $string['deletethiscpd'] = 'Delete CPD: \'%s\'';
 $string['editcpd'] = 'Edit CPD';
-$string['editingcpd'] = 'Editing CPD';
 $string['manageactivities'] = 'Manage activities';
 $string['mycpds'] = 'Continuing Professional Development';
 $string['newcpd'] = 'New CPD';

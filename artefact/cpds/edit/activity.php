@@ -47,7 +47,7 @@ $form = ArtefactTypeactivity::get_form($activity->get('parent'), $activity);
 
 $smarty = smarty();
 $smarty->assign('editform', $form);
-$smarty->assign('PAGEHEADING', hsc(get_string("editingactivity", "artefact.cpds")));
+$smarty->assign('PAGEHEADING', hsc(get_string("editactivity", "artefact.cpds")));
 $smarty->display('artefact:cpds:edit.tpl');
 
 ?>
