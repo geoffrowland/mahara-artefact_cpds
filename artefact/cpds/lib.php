@@ -446,7 +446,7 @@ class ArtefactTypeActivity extends ArtefactType {
             'title' => array(
                 'type'         => 'text',
                 'defaultvalue' => null,
-                'title'        => get_string('activity', 'artefact.cpds'),
+                'title'        => get_string('activitytitle', 'artefact.cpds'),
                 'description'  => get_string('titledesc', 'artefact.cpds'),
                 'size'         => 30,
                 'rules'        => array(
