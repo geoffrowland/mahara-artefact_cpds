@@ -62,6 +62,8 @@ EOF;
 $smarty = smarty(array('paginator'));
 $smarty->assign_by_ref('activities', $activities);
 $smarty->assign_by_ref('cpd', $id);
+$smarty->assign_by_ref('tags', $cpd->get('tags'));
+$smarty->assign_by_ref('owner', $cpd->get('owner'));
 $smarty->assign('strnoactivitiesaddone',
     get_string('noactivitiesaddone', 'artefact.cpds',
     '<a href="' . get_config('wwwroot') . 'artefact/cpds/new.php?id='.$cpd->get('id').'">', '</a>'));

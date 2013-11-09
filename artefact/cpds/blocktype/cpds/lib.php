@@ -68,7 +68,8 @@ class PluginBlocktypeCpds extends PluginBlocktype {
 
         $smarty = smarty_core();
         if (isset($configdata['artefactid'])) {
-            $activities = ArtefactTypeactivity::get_activities($configdata['artefactid']);
+            $cpd = artefact_instance_from_id($configdata['artefactid']);
+            $activities = ArtefactTypeActivity::get_activities($configdata['artefactid']);
             $template = 'artefact:cpds:activityrows.tpl';
             $blockid = $instance->get('id');
             if ($exporter) {
@@ -89,7 +90,9 @@ class PluginBlocktypeCpds extends PluginBlocktype {
                     . '&amp;view=' . $instance->get('view');
                 $activities['pagination'] = '<a href="' . $artefacturl . '">' . get_string('allactivities', 'artefact.cpds') . '</a>';
             }
-            $smarty->assign('activities',$activities);
+            $smarty->assign('activities', $activities);
+            $smarty->assign('owner', $cpd->get('owner'));
+            $smarty->assign('tags', $cpd->get('tags'));
         }
         else {
             $smarty->assign('nocpds','blocktype.cpds/cpds');
