@@ -236,12 +236,13 @@ class ArtefactTypeCPD extends ArtefactType {
                 ),
             ),
             'description' => array(
-                'type'         => 'textarea',
+                'type'         => 'wysiwyg',
                 'rows'         => 10,
-                'cols'         => 50,
+                'cols'         => 70,
                 'resizable'    => false,
                 'defaultvalue' => null,
                 'title'        => get_string('description', 'artefact.cpds'),
+                'rules'        => array('maxlength' => 65536),
             ),
             'tags'        => array(
                 'type'        => 'tags',
@@ -501,12 +502,13 @@ class ArtefactTypeActivity extends ArtefactType {
                 ),
             ),
             'description' => array(
-                'type'         => 'textarea',
+                'type'         => 'wysiwyg',
                 'rows'         => 10,
-                'cols'         => 50,
+                'cols'         => 70,
                 'resizable'    => false,
                 'defaultvalue' => null,
                 'title'        => get_string('description', 'artefact.cpds'),
+                'rules'        => array('maxlength' => 65536),
             ),
             'tags'        => array(
                 'type'        => 'tags',
