@@ -5,7 +5,7 @@
             <td class="c1">{$activity->startdate}</td>
             <td class="c2">{$activity->enddate}</td>
             <td class="c3">{$activity->title} {str tag='at' section='artefact.cpds'} {$activity->location}</td>
-            <td class="c4">{$activity->description|safe}</td>
+            <td class="c4">{$activity->description|clean_html|safe}</td>
             <td class="c5 right">{$activity->hours}</td>
             <td class="c6 buttonscell"><a href="{$WWWROOT}artefact/cpds/edit/activity.php?id={$activity->activity}" title="{str tag=edit}"><img src="{theme_url filename='images/btn_edit.png'}" alt="{str tag=edit}"></a>
             <a href="{$WWWROOT}artefact/cpds/delete/activity.php?id={$activity->activity}" title="{str tag=delete}"><img src="{theme_url filename='images/btn_deleteremove.png'}" alt="{str tag=delete}"></a></td>
