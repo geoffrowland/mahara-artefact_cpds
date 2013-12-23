@@ -8,7 +8,7 @@
     <div>{str tag="cpdsactivitiesdesc" section="artefact.cpds"}</div>
     <div class="message">{$strnoactivitiesaddone|safe}</div>
 {else}
-<table id="activitieslist">
+<table id="activitieslist" class="fullwidth listing">
     <thead>
         <tr>
             <th>{str tag='startdate' section='artefact.cpds'}</th>
