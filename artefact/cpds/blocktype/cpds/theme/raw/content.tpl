@@ -1,7 +1,7 @@
 <div class="blockinstance-content">
 {if $tags}<p class="tags s"><label>{str tag=tags}:</label> {list_tags owner=$owner tags=$tags}</p>{/if}
 {if $activities.data}
-<table id="activitytable_{$blockid}" class="cpdsblocktable">
+<table id="activitytable_{$blockid}" class="cpdsblocktable fullwidth">
     <thead>
         <tr>
             <th class="c1">{str tag='startdate' section='artefact.cpds'}</th>
