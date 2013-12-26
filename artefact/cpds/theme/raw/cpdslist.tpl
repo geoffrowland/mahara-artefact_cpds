@@ -13,6 +13,6 @@
                 <div>{str tag=tags}: {list_tags tags=$cpd->tags owner=$cpd->owner}</div>
             {/if}
 
-            <div class="codesc">{$cpd->description}</div>
+            <div class="codesc">{$cpd->description|clean_html|safe}</div>
         </td>
     </tr>
