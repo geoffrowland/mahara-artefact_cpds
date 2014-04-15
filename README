@@ -24,7 +24,7 @@ https://github.com/geoffrowland/mahara-artefact_cpds
 
 Download, unpack and copy the /cpds folder (and included files and folders) into the /artefact folder of your Mahara installation. Then enable plugin type: artefact cpds, followed by the plugintype: blocktype cpds/cpds from the Plugin Administration interface.
 
-The plugin has versions which work with any Mahara 1.3.x, 1.4.x, 1.5.x, 1.6.x, 1.7.x or 1.8.x installation. It creates a new artefact_cpds_activity table which is a 1:1 extension of the artefact table. 
+The plugin has versions which work with any Mahara 1.3.x, 1.4.x, 1.5.x, 1.6.x, 1.7.x, 1.8.x or 1.9.x installation. It creates a new artefact_cpds_activity table which is a 1:1 extension of the artefact table. 
 
 Please test it on a development installation before production deployment.
 
