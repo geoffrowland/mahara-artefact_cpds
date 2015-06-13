@@ -3,6 +3,7 @@
     <div class="rbuttons">
         <a class="btn" href="{$WWWROOT}artefact/cpds/new.php?id={$cpd}">{str section="artefact.cpds" tag="newactivity"}</a>
     </div>
+    <p class="detail">{$description|clean_html|safe}</p>
     {if $tags}<p class="tags s"><label>{str tag=tags}:</label> {list_tags owner=$owner tags=$tags}</p>{/if}
 {if !$activities.data}
     <div>{str tag="cpdsactivitiesdesc" section="artefact.cpds"}</div>

@@ -28,13 +28,7 @@
 
 
 define('INTERNAL', 1);
-//require(get_config('docroot') . 'lib/version.php');
-//$release = $config->release;
-//if ($release < 1.4) {
-// define('MENUITEM', 'myportfolio/cpds');
-//} else {
-      define('MENUITEM', 'content/cpds');
-//}
+define('MENUITEM', 'content/cpds');
 define('SECTION_PLUGINTYPE', 'artefact');
 define('SECTION_PLUGINNAME', 'cpds');
 define('SECTION_PAGE', 'index');
@@ -43,6 +37,10 @@ require(dirname(dirname(dirname(__FILE__))) . '/init.php');
 safe_require('artefact', 'cpds');
 
 define('TITLE', get_string('mycpds','artefact.cpds'));
+
+if (!PluginArtefactCpds::is_active()) {
+    throw new AccessDeniedException(get_string('plugindisableduser', 'mahara', get_string('cpds','artefact.cpds')));
+}
 
 // offset and limit for pagination
 $offset = param_integer('offset', 0);
@@ -65,5 +63,3 @@ $smarty->assign('strnocpdsaddone',
 $smarty->assign('PAGEHEADING', hsc(get_string("mycpds", "artefact.cpds")));
 $smarty->assign('INLINEJAVASCRIPT', $js);
 $smarty->display('artefact:cpds:index.tpl');
-
-?>

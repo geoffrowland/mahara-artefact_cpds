@@ -62,6 +62,7 @@ EOF;
 $smarty = smarty(array('paginator'));
 $smarty->assign_by_ref('activities', $activities);
 $smarty->assign_by_ref('cpd', $id);
+$smarty->assign_by_ref('description', $cpd->get('description'));
 $smarty->assign_by_ref('tags', $cpd->get('tags'));
 $smarty->assign_by_ref('owner', $cpd->get('owner'));
 $smarty->assign('strnoactivitiesaddone',

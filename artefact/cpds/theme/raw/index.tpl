@@ -6,11 +6,9 @@
 {if !$cpds.data}
     <div class="message">{$strnocpdsaddone|safe}</div>
 {else}
-<table id="cpdslist" class="fullwidth listing">
-    <tbody>
+<div id="cpdslist" class="fullwidth listing">
         {$cpds.tablerows|safe}
-    </tbody>
-</table>
+</div>
    {$cpds.pagination|safe}
 {/if}
 </div>

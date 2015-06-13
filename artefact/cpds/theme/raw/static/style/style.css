@@ -5,7 +5,7 @@
  * This file is distributed under the same terms as Mahara itself
  */
 th.cpdscontrols {
-    width: 40px; !important;
+    width: 4px; !important;
 }
 
 #cpdswrap table {
@@ -45,14 +45,43 @@ ul.cpdslist li {
 	list-style: none;
 	margin: 0 0 3px 0;
 }
+/*
 .codesc {
 	font-size: .9167em;
 }
+
+
+.detail {
+	font-size: .9167em;
+}
+*/
+
+.detail p {
+    margin-top: 0em;
+}
+
+
 #activitieslist td {
 	padding: 3px 5px 3px 5px;
 }
+
+
+#activitieslist td p {
+    margin-top: 0em;
+    margin-bottom: 1em;
+}
+
 .summaryhours {
 	border-style: solid;
 	border-width: 1px 0px 1px 0px;
 	border-color: #cccccc;	
+}
+.cpdstatus a {
+    margin-left: 5px;
+}
+.cpdstatus a:hover {
+    text-decoration: none;
+}
+.cpdactivitydescription p {
+    margin: 0 0 5px;
 }

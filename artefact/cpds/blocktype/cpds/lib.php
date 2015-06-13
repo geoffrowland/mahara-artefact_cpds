@@ -90,6 +90,7 @@ class PluginBlocktypeCpds extends PluginBlocktype {
                     . '&amp;view=' . $instance->get('view');
                 $activities['pagination'] = '<a href="' . $artefacturl . '">' . get_string('allactivities', 'artefact.cpds') . '</a>';
             }
+            $smarty->assign('description', $cpd->get('description'));
             $smarty->assign('activities', $activities);
             $smarty->assign('owner', $cpd->get('owner'));
             $smarty->assign('tags', $cpd->get('tags'));
@@ -106,7 +107,7 @@ class PluginBlocktypeCpds extends PluginBlocktype {
         return true;
     }
 
-    public static function instance_config_form($instance) {
+    public static function instance_config_form(BlockInstance $instance) {
         $configdata = $instance->get('configdata');
 
         $form = array();

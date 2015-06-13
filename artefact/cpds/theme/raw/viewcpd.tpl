@@ -1,3 +1,4 @@
+<p class="detail">{$description|clean_html|safe}</p>
 {if $tags}<p class="tags s"><label>{str tag=tags}:</label> {list_tags owner=$owner tags=$tags}</p>{/if}
 <table id="activitytable">
     <thead>
