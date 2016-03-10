@@ -1,8 +1,7 @@
 <?php
 /**
  * Mahara: Electronic portfolio, weblog, resume builder and social networking
- * Copyright (C) 2006-2009 Catalyst IT Ltd and others; see:
- *                         http://wiki.mahara.org/Contributors
+ * Copyright (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +19,8 @@
  * @package    mahara
  * @subpackage artefact-cpds
  * @author     James Kerrigan
- * @author     Geoffrey Rowland 
+ * @author     Geoffrey Rowland
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
- * @copyright  (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  */
 
@@ -42,16 +40,16 @@ class PluginBlocktypeCpds extends PluginBlocktype {
         return array('general');
     }
 
-     /**
-     * Optional method. If exists, allows this class to decide the title for
-     * all blockinstances of this type
-     */
+    public static function get_css_icon() {
+        return 'check-square-o';
+    }
+
     public static function get_instance_title(BlockInstance $bi) {
         $configdata = $bi->get('configdata');
 
         if (!empty($configdata['artefactid'])) {
-            safe_require('artefact','cpds');
-            $cpd = new ArtefactTypecpd($configdata['artefactid']);
+            safe_require('artefact', 'cpds');
+            $cpd   = new ArtefactTypeCPD($configdata['artefactid']);
             $title = $cpd->get('title');
             return $title;
         }
@@ -62,7 +60,7 @@ class PluginBlocktypeCpds extends PluginBlocktype {
         global $exporter;
 
         require_once(get_config('docroot') . 'artefact/lib.php');
-        safe_require('artefact','cpds');
+        safe_require('artefact', 'cpds');
 
         $configdata = $instance->get('configdata');
 
@@ -76,17 +74,19 @@ class PluginBlocktypeCpds extends PluginBlocktype {
                 $pagination = false;
             }
             else {
+                $baseurl = $instance->get_view()->get_url();
+                $baseurl .= ((false === strpos($baseurl, '?')) ? '?' : '&') . 'block=' . $blockid;
                 $pagination = array(
-                    'baseurl'   => $instance->get_view()->get_url() . '&block=' . $blockid,
-                    'id'        => 'block' . $blockid . '_pagination',
-                    'datatable' => 'activitytable_' . $blockid,
+                    'baseurl'    => $baseurl,
+                    'id'         => 'block' . $blockid . '_pagination',
+                    'datatable'  => 'activitytable_' . $blockid,
                     'jsonscript' => 'artefact/cpds/viewactivities.json.php',
                 );
             }
             ArtefactTypeActivity::render_activities($activities, $template, $configdata, $pagination);
 
             if ($exporter && $activities['count'] > $activities['limit']) {
-                $artefacturl = get_config('wwwroot') . 'view/artefact.php?artefact=' . $configdata['artefactid']
+                $artefacturl = get_config('wwwroot') . 'artefact/artefact.php?artefact=' . $configdata['artefactid']
                     . '&amp;view=' . $instance->get('view');
                 $activities['pagination'] = '<a href="' . $artefacturl . '">' . get_string('allactivities', 'artefact.cpds') . '</a>';
             }
@@ -96,7 +96,7 @@ class PluginBlocktypeCpds extends PluginBlocktype {
             $smarty->assign('tags', $cpd->get('tags'));
         }
         else {
-            $smarty->assign('nocpds','blocktype.cpds/cpds');
+            $smarty->assign('nocpds', 'blocktype.cpds/cpds');
         }
         $smarty->assign('blockid', $instance->get('id'));
         return $smarty->fetch('blocktype:cpds:content.tpl');
@@ -107,13 +107,12 @@ class PluginBlocktypeCpds extends PluginBlocktype {
         return true;
     }
 
-    public static function instance_config_form(BlockInstance $instance) {
+    public static function instance_config_form($instance) {
         $configdata = $instance->get('configdata');
 
-        $form = array();
-
-        // Which resume field does the user want
-        $form[] = self::artefactchooser_element((isset($configdata['artefactid'])) ? $configdata['artefactid'] : null);
+        $form = array(
+            self::artefactchooser_element((isset($configdata['artefactid'])) ? $configdata['artefactid'] : null)
+        );
 
         return $form;
     }
@@ -121,15 +120,15 @@ class PluginBlocktypeCpds extends PluginBlocktype {
     public static function artefactchooser_element($default=null) {
         safe_require('artefact', 'cpds');
         return array(
-            'name'  => 'artefactid',
-            'type'  => 'artefactchooser',
-            'title' => get_string('cpdstoshow', 'blocktype.cpds/cpds'),
-            'defaultvalue' => $default,
-            'blocktype' => 'cpds',
-            'selectone' => true,
-            'search'    => false,
+            'name'          => 'artefactid',
+            'type'          => 'artefactchooser',
+            'title'         => get_string('cpdstoshow', 'blocktype.cpds/cpds'),
+            'defaultvalue'  => $default,
+            'blocktype'     => 'cpds',
+            'selectone'     => true,
+            'search'        => false,
             'artefacttypes' => array('cpd'),
-            'template'  => 'artefact:cpds:artefactchooser-element.tpl',
+            'template'      => 'artefact:cpds:artefactchooser-element.tpl',
         );
     }
 
@@ -137,4 +136,3 @@ class PluginBlocktypeCpds extends PluginBlocktype {
         return $view->get('owner') != null;
     }
 }
-

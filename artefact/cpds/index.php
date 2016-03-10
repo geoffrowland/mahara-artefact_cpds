@@ -1,8 +1,7 @@
 <?php
 /**
  * Mahara: Electronic portfolio, weblog, resume builder and social networking
- * Copyright (C) 2006-2009 Catalyst IT Ltd and others; see:
- *                         http://wiki.mahara.org/Contributors
+ * Copyright (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +19,8 @@
  * @package    mahara
  * @subpackage artefact-cpds
  * @author     James Kerrigan
- * @author     Geoffrey Rowland 
+ * @author     Geoffrey Rowland
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
- * @copyright  (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  */
 
@@ -36,18 +34,14 @@ define('SECTION_PAGE', 'index');
 require(dirname(dirname(dirname(__FILE__))) . '/init.php');
 safe_require('artefact', 'cpds');
 
-define('TITLE', get_string('mycpds','artefact.cpds'));
-
-if (!PluginArtefactCpds::is_active()) {
-    throw new AccessDeniedException(get_string('plugindisableduser', 'mahara', get_string('cpds','artefact.cpds')));
-}
+define('TITLE', get_string('mycpds', 'artefact.cpds'));
 
 // offset and limit for pagination
 $offset = param_integer('offset', 0);
-$limit  = param_integer('limit', 20);
+$limit  = param_integer('limit', 10);
 
-$cpds = ArtefactTypeCpd::get_cpds($offset, $limit);
-ArtefactTypeCpd::build_cpds_list_html($cpds);
+$cpds = ArtefactTypeCPD::get_cpds($offset, $limit);
+ArtefactTypeCPD::build_cpds_list_html($cpds);
 
 $js = <<< EOF
 addLoadEvent(function () {

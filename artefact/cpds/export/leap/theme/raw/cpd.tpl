@@ -1,3 +1,8 @@
 {include file="export:leap:entry.tpl" skipfooter=true}
-{if $completion}        <leap2:status leap2:stage="{$completion}" />{/if}
+{if $hours}
+        <mahara:hours>{$hours}</mahara:hours>
+{/if}
+{if $location}
+        <leap2:spatial>{$location}</leap2:spatial>
+{/if}
 {include file="export:leap:entryfooter.tpl"}

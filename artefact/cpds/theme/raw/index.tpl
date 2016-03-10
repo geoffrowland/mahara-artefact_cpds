@@ -1,15 +1,20 @@
 {include file="header.tpl"}
-<div id="cpdswrap">
-    <div class="rbuttons">
-        <a class="btn" href="{$WWWROOT}artefact/cpds/new.php">{str section="artefact.cpds" tag="newcpd"}</a>
-    </div>
-{if !$cpds.data}
-    <div class="message">{$strnocpdsaddone|safe}</div>
-{else}
-<div id="cpdslist" class="fullwidth listing">
-        {$cpds.tablerows|safe}
+<div class="btn-top-right btn-group btn-group-top">
+    <a <a class="btn btn-default settings" href="{$WWWROOT}artefact/cpds/new.php?id={$cpd}">
+        <span class="icon icon-lg icon-plus left"></span>
+        {str section="artefact.cpds" tag="newactivity"}
+    </a>
 </div>
+<div id="cpdslist" class="view-container">
+    {if !$cpds.data}
+    <div class="no-results">
+        {$strnocpdsaddone|safe}
+    </div>
+    {else}
+    <div id="cpdslist">
+        {$cpds.tablerows|safe}
+    </div>
    {$cpds.pagination|safe}
-{/if}
+    {/if}
 </div>
 {include file="footer.tpl"}

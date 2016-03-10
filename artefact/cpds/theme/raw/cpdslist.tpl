@@ -1,21 +1,38 @@
+<div class="list-group list-group-lite">
 {foreach from=$cpds.data item=cpd}
-    <div class="{cycle values='r0,r1'} listrow">
-        <h3 class="title"><a href="{$WWWROOT}artefact/cpds/cpd.php?id={$cpd->id}">{$cpd->title}</a></h3>
-        <div class="fr cpdstatus">
-            <a href="{$WWWROOT}artefact/cpds/edit/index.php?id={$cpd->id}" title="{str tag="edit"}" >
-                <img src="{theme_url filename='images/btn_edit.png'}" alt="{str(tag=editspecific arg1=$cpd->title)|escape:html|safe}">
-            </a>
-            <a href="{$WWWROOT}artefact/cpds/cpd.php?id={$cpd->id}" title="{str tag=manageactivities section=artefact.cpds}">
-                <img src="{theme_url filename='images/btn_configure.png'}" alt="{str(tag=managetasksspecific section=artefact.cpds arg1=$cpd->title)|escape:html|safe}">
-            </a>
-            <a href="{$WWWROOT}artefact/cpds/delete/index.php?id={$cpd->id}" title="{str tag="delete"}">
-                <img src="{theme_url filename='images/btn_deleteremove.png'}" alt="{str(tag=deletespecific arg1=$cpd->title)|escape:html|safe}">
-            </a>
+    <div class="list-group-item">
+        <div class="clearfix">
+            <h3 class="list-group-item-heading">
+                <a href="{$WWWROOT}artefact/cpds/cpd.php?id={$cpd->id}">
+                    {$cpd->title}
+                </a>
+            </h3>
+            <div class="list-group-item-controls">
+                <div class="btn-group btn-group-top">
+                     <a href="{$WWWROOT}artefact/cpds/edit/index.php?id={$cpd->id}" title="{str tag="edit"}" class="btn btn-default btn-sm">
+                        <span class="icon icon-lg icon-pencil" aria-hidden="true" role="presentation"></span>
+                        <span class="sr-only">{str tag=edit}</span>
+                    </a>
+                     <a href="{$WWWROOT}artefact/cpds/cpd.php?id={$cpd->id}" title="{str tag=manageactivities section=artefact.cpds}" class="btn btn-default btn-sm">
+                        <span class="icon icon-lg icon-cog" aria-hidden="true" role="presentation"></span>
+                        <span class="sr-only">{str tag=managetasks section=artefact.plans}</span>
+                    </a>
+                     <a href="{$WWWROOT}artefact/cpds/delete/index.php?id={$cpd->id}" title="{str tag="delete"}" class="btn btn-default btn-sm">
+                        <span class="icon icon-trash text-danger icon-lg" aria-hidden="true" role="presentation"></span>
+                        <span class="sr-only">{str tag=delete}</span>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="detail">{$cpd->description|clean_html|safe}</div>
+
+        <p class="detail">
+            {$cpd->description}
+        </p>
         {if $cpd->tags}
-            <div>{str tag=tags}: {list_tags tags=$cpd->tags owner=$cpd->owner}</div>
+
+        <div class="tags">
+            <strong>{str tag=tags}:</strong> {list_tags tags=$cpd->tags owner=$cpd->owner}
+        </div>
         {/if}
-        <div class="cb"></div>
     </div>
 {/foreach}

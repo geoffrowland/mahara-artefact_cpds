@@ -1,8 +1,7 @@
 <?php
 /**
  * Mahara: Electronic portfolio, weblog, resume builder and social networking
- * Copyright (C) 2006-2009 Catalyst IT Ltd and others; see:
- *                         http://wiki.mahara.org/Contributors
+ * Copyright (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +19,8 @@
  * @package    mahara
  * @subpackage artefact-cpds
  * @author     James Kerrigan
- * @author     Geoffrey Rowland 
+ * @author     Geoffrey Rowland
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
- * @copyright  (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  */
 
@@ -36,24 +34,23 @@ define('SECTION_PAGE', 'cpds');
 require(dirname(dirname(dirname(__FILE__))) . '/init.php');
 safe_require('artefact', 'cpds');
 
-define('TITLE', get_string('activities','artefact.cpds'));
+define('TITLE', get_string('activities', 'artefact.cpds'));
 
 $id = param_integer('id');
 
 // offset and limit for pagination
 $offset = param_integer('offset', 0);
-$limit  = param_integer('limit', 20);
+$limit  = param_integer('limit', 10);
 
-$cpd = new ArtefactTypeCpd($id);
+$cpd = new ArtefactTypeCPD($id);
 if (!$USER->can_edit_artefact($cpd)) {
     throw new AccessDeniedException(get_string('accessdenied', 'error'));
 }
 
-
 $activities = ArtefactTypeActivity::get_activities($cpd->get('id'), $offset, $limit);
 ArtefactTypeActivity::build_activities_list_html($activities);
 
-$js = <<< EOF
+$js = <<<EOF
 addLoadEvent(function () {
     {$activities['pagination_js']}
 });
@@ -62,14 +59,11 @@ EOF;
 $smarty = smarty(array('paginator'));
 $smarty->assign_by_ref('activities', $activities);
 $smarty->assign_by_ref('cpd', $id);
-$smarty->assign_by_ref('description', $cpd->get('description'));
 $smarty->assign_by_ref('tags', $cpd->get('tags'));
 $smarty->assign_by_ref('owner', $cpd->get('owner'));
 $smarty->assign('strnoactivitiesaddone',
     get_string('noactivitiesaddone', 'artefact.cpds',
-    '<a href="' . get_config('wwwroot') . 'artefact/cpds/new.php?id='.$cpd->get('id').'">', '</a>'));
-$smarty->assign('PAGEHEADING', get_string("cpdsactivities", "artefact.cpds",$cpd->get('title')));
+    '<a href="' . get_config('wwwroot') . 'artefact/cpds/new.php?id=' . $cpd->get('id') . '">', '</a>'));
+$smarty->assign('PAGEHEADING', get_string("cpdsactivities", "artefact.cpds", $cpd->get('title')));
 $smarty->assign('INLINEJAVASCRIPT', $js);
 $smarty->display('artefact:cpds:cpd.tpl');
-
-?>

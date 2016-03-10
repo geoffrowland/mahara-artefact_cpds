@@ -43,24 +43,20 @@ class PluginArtefactCPDs extends PluginArtefact {
         return 'cpds';
     }
 
-    public static function is_active() {
-        return get_field('artefact_installed', 'active', 'name', 'cpds');
-    }
-
     public static function menu_items() {
         return array(
             array(
-                'path' => 'content/cpds',
-                'title' => get_string('cpds', 'artefact.cpds'),
-                'url' => 'artefact/cpds/',
-                'weight' => 60,
+                'path'   => 'content/cpds',
+                'title'  => get_string('cpds', 'artefact.cpds'),
+                'url'    => 'artefact/cpds/',
+                'weight' => 40,
             ),
         );
     }
 
     public static function get_artefact_type_content_types() {
         return array(
-            'activity' => array('text'),
+                'activity' => array('text'),
         );
     }
 
@@ -96,7 +92,7 @@ class ArtefactTypeCPD extends ArtefactType {
 
     public static function get_icon($options=null) {
         global $THEME;
-        return $THEME->get_url('images/cpd.png', false, 'artefact/cpds');
+        return false;
     }
 
     public static function is_singular() {
@@ -122,7 +118,6 @@ class ArtefactTypeCPD extends ArtefactType {
             if (!isset($cpd->tags)) {
                 $cpd->tags = ArtefactType::artefact_get_tags($cpd->id);
             }
-            //$cpd->description = '<p>' . preg_replace('/\n\n/','</p><p>', $cpd->description) . '</p>';
         }
         $result = array(
             'count'  => count_records('artefact', 'owner', $USER->get('id'), 'artefacttype', 'cpd'),
@@ -144,30 +139,29 @@ class ArtefactTypeCPD extends ArtefactType {
         $smarty->assign_by_ref('cpds', $cpds);
         $cpds['tablerows'] = $smarty->fetch('artefact:cpds:cpdslist.tpl');
         $pagination = build_pagination(array(
-            'id' => 'cpdlist_pagination',
-            'class' => 'center',
-            'url' => get_config('wwwroot') . 'artefact/cpds/index.php',
-            'jsonscript' => 'artefact/cpds/cpds.json.php',
-            'datatable' => 'cpdslist',
-            'count' => $cpds['count'],
-            'limit' => $cpds['limit'],
-            'offset' => $cpds['offset'],
-            'firsttext' => '',
-            'previoustext' => '',
-            'nexttext' => '',
-            'lasttext' => '',
+            'id'                      => 'cpdlist_pagination',
+            'url'                     => get_config('wwwroot') . 'artefact/cpds/index.php',
+            'jsonscript'              => 'artefact/cpds/cpds.json.php',
+            'datatable'               => 'cpdslist',
+            'count'                   => $cpds['count'],
+            'limit'                   => $cpds['limit'],
+            'offset'                  => $cpds['offset'],
+            'firsttext'               => '',
+            'previoustext'            => '',
+            'nexttext'                => '',
+            'lasttext'                => '',
             'numbersincludefirstlast' => false,
             'resultcounttextsingular' => get_string('cpd', 'artefact.cpds'),
-            'resultcounttextplural' => get_string('cpds', 'artefact.cpds'),
+            'resultcounttextplural'   => get_string('cpds', 'artefact.cpds'),
         ));
-        $cpds['pagination'] = $pagination['html'];
+        $cpds['pagination']    = $pagination['html'];
         $cpds['pagination_js'] = $pagination['javascript'];
     }
 
     public static function validate(Pieform $form, $values) {
         global $USER;
         if (!empty($values['cpd'])) {
-            $id = (int) $values['cpd'];
+            $id       = (int) $values['cpd'];
             $artefact = new ArtefactTypeCPD($id);
             if (!$USER->can_edit_artefact($artefact)) {
                 $form->set_error('submit', get_string('canteditdontown'));
@@ -181,22 +175,17 @@ class ArtefactTypeCPD extends ArtefactType {
         $new = false;
 
         if (!empty($values['cpd'])) {
-            $id = (int) $values['cpd'];
+            $id       = (int) $values['cpd'];
             $artefact = new ArtefactTypeCPD($id);
         }
         else {
+            $new      = true;
             $artefact = new ArtefactTypeCPD();
             $artefact->set('owner', $USER->get('id'));
-            $new = true;
         }
 
         $artefact->set('title', $values['title']);
         $artefact->set('description', $values['description']);
-        if (get_config('licensemetadata')) {
-            $artefact->set('license', $values['license']);
-            $artefact->set('licensor', $values['licensor']);
-            $artefact->set('licensorurl', $values['licensorurl']);
-        }
         $artefact->set('tags', $values['tags']);
         $artefact->commit();
 
@@ -216,20 +205,20 @@ class ArtefactTypeCPD extends ArtefactType {
     */
     public static function get_form($cpd=null) {
         require_once(get_config('libroot') . 'pieforms/pieform.php');
-        require_once('license.php');
-        $elements = call_static_method(generate_artefact_class_name('cpd'), 'get_cpdform_elements', $cpd);
+        $elements           = call_static_method(generate_artefact_class_name('cpd'), 'get_cpdform_elements', $cpd);
         $elements['submit'] = array(
-            'type' => 'submitcancel',
+            'type'  => 'submitcancel',
+            'class' => 'btn-primary',
             'value' => array(get_string('savecpd', 'artefact.cpds'), get_string('cancel')),
-            'goto' => get_config('wwwroot') . 'artefact/cpds/',
+            'goto'  => get_config('wwwroot') . 'artefact/cpds/',
         );
         $cpdform = array(
-            'name' => empty($cpd) ? 'addcpd' : 'editcpd',
-            'plugintype' => 'artefact',
-            'pluginname' => 'activity',
+            'name'             => empty($cpd) ? 'addcpd' : 'editcpd',
+            'plugintype'       => 'artefact',
+            'pluginname'       => 'activity',
             'validatecallback' => array(generate_artefact_class_name('cpd'), 'validate'),
-            'successcallback' => array(generate_artefact_class_name('cpd'), 'submit'),
-            'elements' => $elements,
+            'successcallback'  => array(generate_artefact_class_name('cpd'), 'submit'),
+            'elements'         => $elements,
         );
 
         return pieform($cpdform);
@@ -242,22 +231,21 @@ class ArtefactTypeCPD extends ArtefactType {
     public static function get_cpdform_elements($cpd) {
         $elements = array(
             'title' => array(
-                'type' => 'text',
+                'type'         => 'text',
                 'defaultvalue' => null,
-                'title' => get_string('title', 'artefact.cpds'),
-                'size' => 30,
-                'rules' => array(
+                'title'        => get_string('title', 'artefact.cpds'),
+                'size'         => 30,
+                'rules'        => array(
                     'required' => true,
                 ),
             ),
             'description' => array(
-                'type' => 'wysiwyg',
-                'rows' => 10,
-                'cols' => 70,
-                'resizable' => false,
+                'type'         => 'textarea',
+                'rows'         => 10,
+                'cols'         => 50,
+                'resizable'    => false,
                 'defaultvalue' => null,
-                'title' => get_string('description', 'artefact.cpds'),
-                'rules' => array('maxlength' => 65536),
+                'title'        => get_string('description', 'artefact.cpds'),
             ),
             'tags'        => array(
                 'type'        => 'tags',
@@ -271,21 +259,17 @@ class ArtefactTypeCPD extends ArtefactType {
                 $elements[$k]['defaultvalue'] = $cpd->get($k);
             }
             $elements['cpd'] = array(
-                'type' => 'hidden',
+                'type'  => 'hidden',
                 'value' => $cpd->id,
             );
-        }
-
-        if (get_config('licensemetadata')) {
-            $elements['license'] = license_form_el_basic($cpd);
-            $elements['license_advanced'] = license_form_el_advanced($cpd);
         }
 
         return $elements;
     }
 
     public function render_self($options) {
-        $limit  = !isset($options['limit']) ? 20 : (int) $options['limit'];
+
+        $limit  = !isset($options['limit']) ? 10 : (int) $options['limit'];
         $offset = isset($options['offset']) ? intval($options['offset']) : 0;
 
         $activities = ArtefactTypeActivity::get_activities($this->id, $offset, $limit);
@@ -298,9 +282,9 @@ class ArtefactTypeCPD extends ArtefactType {
         }
 
         $pagination = array(
-            'baseurl' => $baseurl,
-            'id' => 'activity_pagination',
-            'datatable' => 'activitylist',
+            'baseurl'    => $baseurl,
+            'id'         => 'activity_pagination',
+            'datatable'  => 'activitylist',
             'jsonscript' => 'artefact/cpds/viewactivities.json.php',
         );
 
@@ -314,14 +298,7 @@ class ArtefactTypeCPD extends ArtefactType {
         else {
             $smarty->assign('artefacttitle', hsc($this->get('title')));
         }
-        $smarty->assign('cpd', $this);
-
-        if (!empty($options['details']) and get_config('licensemetadata')) {
-            $smarty->assign('license', render_license($this));
-        }
-        else {
-            $smarty->assign('license', false);
-        }
+        $smarty->assign('description', $this->get('description'));
         $smarty->assign('owner', $this->get('owner'));
         $smarty->assign('tags', $this->get('tags'));
 
@@ -404,11 +381,11 @@ class ArtefactTypeActivity extends ArtefactType {
             $date = db_format_timestamp($startdate);
         }
         $data = (object)array(
-            'artefact' => $this->get('id'),
-            'hours' => $this->get('hours'),
-            'location' => $this->get('location'),
+            'artefact'  => $this->get('id'),
+            'hours'     => $this->get('hours'),
+            'location'  => $this->get('location'),
             'startdate' => $date,
-            'enddate' => db_format_timestamp($this->get('enddate')),
+            'enddate'   => db_format_timestamp($this->get('enddate')),
         );
 
         if ($new) {
@@ -461,20 +438,20 @@ class ArtefactTypeActivity extends ArtefactType {
     */
     public static function get_form($parent, $activity=null) {
         require_once(get_config('libroot') . 'pieforms/pieform.php');
-        require_once('license.php');
         $elements = call_static_method(generate_artefact_class_name('activity'), 'get_activityform_elements', $parent, $activity);
         $elements['submit'] = array(
             'type'  => 'submitcancel',
+            'class' => 'btn-primary',
             'value' => array(get_string('saveactivity', 'artefact.cpds'), get_string('cancel')),
             'goto'  => get_config('wwwroot') . 'artefact/cpds/cpd.php?id=' . (int)$parent,
         );
         $activityform = array(
-            'name' => empty($activity) ? 'addactivities' : 'editactivity',
-            'plugintype' => 'artefact',
-            'pluginname' => 'activity',
+            'name'             => empty($activity) ? 'addactivities' : 'editactivity',
+            'plugintype'       => 'artefact',
+            'pluginname'       => 'activity',
             'validatecallback' => array(generate_artefact_class_name('activity'), 'validate'),
-            'successcallback' => array(generate_artefact_class_name('activity'), 'submit'),
-            'elements' => $elements,
+            'successcallback'  => array(generate_artefact_class_name('activity'), 'submit'),
+            'elements'         => $elements,
         );
 
         return pieform($activityform);
@@ -487,22 +464,22 @@ class ArtefactTypeActivity extends ArtefactType {
     public static function get_activityform_elements($parent, $activity=null) {
         $elements = array(
             'title' => array(
-                'type' => 'text',
+                'type'         => 'text',
                 'defaultvalue' => null,
-                'title' => get_string('activity', 'artefact.cpds'),
-                'description' => get_string('titledesc', 'artefact.cpds'),
-                'size' => 30,
-                'rules' => array(
+                'title'        => get_string('activitytitle', 'artefact.cpds'),
+                'description'  => get_string('titledesc', 'artefact.cpds'),
+                'size'         => 30,
+                'rules'        => array(
                     'required' => true,
                 ),
             ),
             'location' => array(
-                'type' => 'text',
-                'size' => 30,
+                'type'         => 'text',
+                'size'         => 30,
                 'defaultvalue' => null,
-                'title' => get_string('location', 'artefact.cpds'),
-                'description' => get_string('locationdesc', 'artefact.cpds'),
-                'rules' => array(
+                'title'        => get_string('location', 'artefact.cpds'),
+                'description'  => get_string('locationdesc', 'artefact.cpds'),
+                'rules'        => array(
                     'required' => true,
                 ),
             ),
@@ -510,50 +487,47 @@ class ArtefactTypeActivity extends ArtefactType {
                 'type'       => 'calendar',
                 'caloptions' => array(
                     'showsTime' => false,
-                    'ifFormat' => '%Y/%m/%d',
-                    'dateFormat' => 'yy/mm/dd',
+                    'ifFormat'  => '%Y/%m/%d'
                 ),
                 'defaultvalue' => null,
-                'title' => get_string('startdate', 'artefact.cpds'),
-                'description' => get_string('dateformatguide'),
-                'rules' => array(
+                'title'        => get_string('startdate', 'artefact.cpds'),
+                'description'  => get_string('dateformatguide'),
+                'rules'        => array(
                     'required' => true,
                 ),
             ),
             'enddate' => array(
-                'type' => 'calendar',
+                'type'       => 'calendar',
                 'caloptions' => array(
                     'showsTime' => false,
-                    'ifFormat' => '%Y/%m/%d',
-                    'dateFormat' => 'yy/mm/dd',
+                    'ifFormat'  => '%Y/%m/%d'
                 ),
                 'defaultvalue' => null,
-                'title' => get_string('enddate', 'artefact.cpds'),
-                'description' => get_string('dateformatguide'),
-                'rules' => array(
+                'title'        => get_string('enddate', 'artefact.cpds'),
+                'description'  => get_string('dateformatguide'),
+                'rules'        => array(
                     'required' => false,
                 ),
             ),
             'description' => array(
-                'type'  => 'wysiwyg',
-                'rows' => 10,
-                'cols' => 70,
-                'resizable' => false,
+                'type'         => 'textarea',
+                'rows'         => 10,
+                'cols'         => 50,
+                'resizable'    => false,
                 'defaultvalue' => null,
-                'title' => get_string('description', 'artefact.cpds'),
-                'rules' => array('maxlength' => 65536),
+                'title'        => get_string('description', 'artefact.cpds'),
             ),
-            'tags' => array(
-                'type' => 'tags',
+            'tags'        => array(
+                'type'        => 'tags',
                 'title'       => get_string('tags'),
                 'description' => get_string('tagsdescprofile'),
             ),
             'hours' => array(
-                'type' => 'text',
-                'size' => 7,
+                'type'         => 'text',
+                'size'         => 7,
                 'defaultvalue' => 0.0,
-                'title' => get_string('hours', 'artefact.cpds'),
-                'description' => get_string('hoursdesc', 'artefact.cpds'),
+                'title'        => get_string('hours', 'artefact.cpds'),
+                'description'  => get_string('hoursdesc', 'artefact.cpds'),
             ),
         );
 
@@ -562,17 +536,13 @@ class ArtefactTypeActivity extends ArtefactType {
                 $elements[$k]['defaultvalue'] = $activity->get($k);
             }
             $elements['activity'] = array(
-                'type' => 'hidden',
+                'type'  => 'hidden',
                 'value' => $activity->id,
             );
         }
-        if (get_config('licensemetadata')) {
-            $elements['license'] = license_form_el_basic($activity);
-            $elements['license_advanced'] = license_form_el_advanced($activity);
-        }
 
         $elements['parent'] = array(
-            'type' => 'hidden',
+            'type'  => 'hidden',
             'value' => $parent,
         );
 
@@ -582,7 +552,7 @@ class ArtefactTypeActivity extends ArtefactType {
     public static function validate(Pieform $form, $values) {
         global $USER;
         if (!empty($values['activity'])) {
-            $id = (int) $values['activity'];
+            $id       = (int) $values['activity'];
             $artefact = new ArtefactTypeActivity($id);
             if (!$USER->can_edit_artefact($artefact)) {
                 $form->set_error('submit', get_string('canteditdontown'));
@@ -594,7 +564,7 @@ class ArtefactTypeActivity extends ArtefactType {
         global $USER, $SESSION;
 
         if (!empty($values['activity'])) {
-            $id = (int) $values['activity'];
+            $id       = (int) $values['activity'];
             $artefact = new ArtefactTypeActivity($id);
         }
         else {
@@ -606,11 +576,6 @@ class ArtefactTypeActivity extends ArtefactType {
         $artefact->set('title', $values['title']);
         $artefact->set('location', $values['location']);
         $artefact->set('description', $values['description']);
-        if (get_config('licensemetadata')) {
-            $artefact->set('license', $values['license']);
-            $artefact->set('licensor', $values['licensor']);
-            $artefact->set('licensorurl', $values['licensorurl']);
-        }
         $artefact->set('tags', $values['tags']);
         $artefact->set('hours', $values['hours']);
         $artefact->set('startdate', $values['startdate']);
@@ -630,10 +595,10 @@ class ArtefactTypeActivity extends ArtefactType {
      * @return array (grandtotalhours: number, count: integer, data: array)
      *
      */
-    public static function get_activities($cpd, $offset=0, $limit=20) {
+    public static function get_activities($cpd, $offset=0, $limit=10) {
         ($results = get_records_sql_array("
             SELECT a.id, at.artefact AS activity, at.location, at.hours, " . db_format_tsfield('startdate') . ", " . db_format_tsfield('enddate') . ",
-                a.title, a.description, a.parent, a.owner
+                a.title, a.description, a.parent
                 FROM {artefact} a
             JOIN {artefact_cpds_activity} at ON at.artefact = a.id
             WHERE a.artefacttype = 'activity' AND a.parent = ?
@@ -651,18 +616,16 @@ class ArtefactTypeActivity extends ArtefactType {
                         $result->enddate = strftime(get_string('strftimedate'), $result->enddate);
                     }
                 }
-                //$result->description = '<p>' . preg_replace('/\n\n/','</p><p>', $result->description) . '</p>';
-                $result->tags = ArtefactType::artefact_get_tags($result->id); 
             }
         }
 
         $result = array(
             'grandtotalhours' => $grandtotalhours,
-            'count'  => count_records('artefact', 'artefacttype', 'activity', 'parent', $cpd),
-            'data'   => $results,
-            'offset' => $offset,
-            'limit'  => $limit,
-            'id'     => $cpd,
+            'count'           => count_records('artefact', 'artefacttype', 'activity', 'parent', $cpd),
+            'data'            => $results,
+            'offset'          => $offset,
+            'limit'           => $limit,
+            'id'              => $cpd,
         );
 
         return $result;
@@ -678,36 +641,27 @@ class ArtefactTypeActivity extends ArtefactType {
         $smarty->assign_by_ref('activities', $activities);
         $activities['tablerows'] = $smarty->fetch('artefact:cpds:activitieslist.tpl');
         $pagination = build_pagination(array(
-            'id' => 'activitylist_pagination',
-            'class' => 'center',
-            'url' => get_config('wwwroot') . 'artefact/cpds/cpd.php?id=' . (int)$activities['id'],
-            'jsonscript' => 'artefact/cpds/activities.json.php',
-            'datatable' => 'activitieslist',
-            'count' => $activities['count'],
-            'limit' => $activities['limit'],
-            'offset' => $activities['offset'],
-            'firsttext' => '',
-            'previoustext' => '',
-            'nexttext' => '',
-            'lasttext' => '',
+            'id'                      => 'activitylist_pagination',
+            'class'                   => 'center',
+            'url'                     => get_config('wwwroot') . 'artefact/cpds/cpd.php?id=' . (int)$activities['id'],
+            'jsonscript'              => 'artefact/cpds/activities.json.php',
+            'datatable'               => 'activitieslist',
+            'count'                   => $activities['count'],
+            'limit'                   => $activities['limit'],
+            'offset'                  => $activities['offset'],
+            'firsttext'               => '',
+            'previoustext'            => '',
+            'nexttext'                => '',
+            'lasttext'                => '',
             'numbersincludefirstlast' => false,
             'resultcounttextsingular' => get_string('activity', 'artefact.cpds'),
-            'resultcounttextplural' => get_string('activities', 'artefact.cpds'),
+            'resultcounttextplural'   => get_string('activities', 'artefact.cpds'),
         ));
-        $activities['pagination'] = $pagination['html'];
+        $activities['pagination']    = $pagination['html'];
         $activities['pagination_js'] = $pagination['javascript'];
     }
 
-    /**
-     * Function to append the rendered html to the $activity data object
-     *
-     * @param   array   $activities The activities array containing activity objects + pagination count data
-     * @param   string  $template   The name of the template to use for rendering
-     * @param   array   $options    The block instance options
-     * @param   array   $pagination The pagination data
-     *
-     * @return  array   $activities The activities array updated with rendered table html
-    */
+    // @TODO: make blocktype use this too
     public static function render_activities(&$activities, $template, $options, $pagination) {
         $smarty = smarty_core();
         $smarty->assign_by_ref('activities', $activities);
@@ -716,19 +670,19 @@ class ArtefactTypeActivity extends ArtefactType {
 
         if ($activities['limit'] && $pagination) {
             $pagination = build_pagination(array(
-                'id' => $pagination['id'],
-                'class' => 'center',
-                'datatable' => $pagination['datatable'],
-                'url' => $pagination['baseurl'],
-                'jsonscript' => $pagination['jsonscript'],
-                'count' => $activities['count'],
-                'limit' => $activities['limit'],
-                'offset' => $activities['offset'],
+                'id'                      => $pagination['id'],
+                'class'                   => 'center',
+                'datatable'               => $pagination['datatable'],
+                'url'                     => $pagination['baseurl'],
+                'jsonscript'              => $pagination['jsonscript'],
+                'count'                   => $activities['count'],
+                'limit'                   => $activities['limit'],
+                'offset'                  => $activities['offset'],
                 'numbersincludefirstlast' => false,
                 'resultcounttextsingular' => get_string('activity', 'artefact.cpds'),
-                'resultcounttextplural' => get_string('activities', 'artefact.cpds'),
+                'resultcounttextplural'   => get_string('activities', 'artefact.cpds'),
             ));
-            $activities['pagination'] = $pagination['html'];
+            $activities['pagination']    = $pagination['html'];
             $activities['pagination_js'] = $pagination['javascript'];
         }
     }
@@ -736,4 +690,5 @@ class ArtefactTypeActivity extends ArtefactType {
     public static function is_countable_progressbar() {
         return true;
     }
+
 }

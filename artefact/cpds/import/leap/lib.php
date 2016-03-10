@@ -1,8 +1,7 @@
 <?php
 /**
  * Mahara: Electronic portfolio, weblog, resume builder and social networking
- * Copyright (C) 2006-2009 Catalyst IT Ltd and others; see:
- *                         http://wiki.mahara.org/Contributors
+ * Copyright (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +19,8 @@
  * @package    mahara
  * @subpackage artefact-cpds
  * @author     James Kerrigan
- * @author     Geoffrey Rowland 
+ * @author     Geoffrey Rowland
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
- * @copyright  (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  */
 
@@ -37,13 +35,13 @@ defined('INTERNAL') || die();
  * everything else crammed in at the second level.
  */
 
-class LeapImportcpds extends LeapImportArtefactPlugin {
+class LeapImportCPDs extends LeapImportArtefactPlugin {
 
-    const STRATEGY_IMPORT_AS_cpd = 1;
+    const STRATEGY_IMPORT_AS_CPD = 1;
 
     // Keep track of cpd ancestors which will become activity parents
     private static $ancestors = array();
-    private static $parents = array();
+    private static $parents   = array();
 
     public static function get_import_strategies_for_entry(SimpleXMLElement $entry, PluginImportLeap $importer) {
         $strategies = array();
@@ -52,8 +50,8 @@ class LeapImportcpds extends LeapImportArtefactPlugin {
         if (PluginImportLeap::is_rdf_type($entry, $importer, 'cpd')
             && (empty($entry->content['type']) || (string)$entry->content['type'] == 'text')) {
             $strategies[] = array(
-                'strategy' => self::STRATEGY_IMPORT_AS_cpd,
-                'score'    => 90,
+                'strategy'               => self::STRATEGY_IMPORT_AS_CPD,
+                'score'                  => 90,
                 'other_required_entries' => array(),
             );
         }
@@ -63,7 +61,7 @@ class LeapImportcpds extends LeapImportArtefactPlugin {
 
     public static function import_using_strategy(SimpleXMLElement $entry, PluginImportLeap $importer, $strategy, array $otherentries) {
 
-        if ($strategy != self::STRATEGY_IMPORT_AS_cpd) {
+        if ($strategy != self::STRATEGY_IMPORT_AS_CPD) {
             throw new ImportException($importer, 'TODO: get_string: unknown strategy chosen for importing entry');
         }
 
@@ -92,7 +90,7 @@ class LeapImportcpds extends LeapImportArtefactPlugin {
                         $href = (string)$link['href'];
                         if ($href != $entryid
                             && $importer->curie_equals($link['rel'], PluginImportLeap::NS_LEAP, 'is_part_of')
-                            && $importer->entry_has_strategy($href, self::STRATEGY_IMPORT_AS_cpd, 'cpds')) {
+                            && $importer->entry_has_strategy($href, self::STRATEGY_IMPORT_AS_CPD, 'cpds')) {
                             self::$parents[$childid] = $href;
                             break;
                         }
@@ -125,10 +123,10 @@ class LeapImportcpds extends LeapImportArtefactPlugin {
         // on whether it has any ancestral cpds.
 
         if (self::get_ancestor_entryid($entry, $importer)) {
-            $artefact = new ArtefactTypeactivity();
+            $artefact = new ArtefactTypeActivity();
         }
         else {
-            $artefact = new ArtefactTypecpd();
+            $artefact = new ArtefactTypeCPD();
         }
 
         $artefact->set('title', (string)$entry->title);
@@ -150,19 +148,31 @@ class LeapImportcpds extends LeapImportArtefactPlugin {
         $artefact->set('tags', PluginImportLeap::get_entry_tags($entry));
 
         // Set startdate and hours status if we can find them
-        if ($artefact instanceof ArtefactTypeactivity) {
+        if ($artefact instanceof ArtefactTypeActivity) {
 
             $namespaces = $importer->get_namespaces();
             $ns = $importer->get_leap2a_namespace();
 
+            $startdate = $enddate = null;
             $dates = PluginImportLeap::get_leap_dates($entry, $namespaces, $ns);
-            if (!empty($dates['target']['value'])) {
-                $startdate = strtotime($dates['target']['value']);
+            if (!empty($dates['start']['value'])) {
+                $startdate = strtotime($dates['start']['value']);
             }
-            $artefact->set('startdate', empty($startdate) ? $artefact->get('mtime') : $startdate);
+            if (!empty($dates['end']['value'])) {
+                $enddate = strtotime($dates['end']['value']);
+            }
 
-            if ($entry->xpath($namespaces[$ns] . ':status[@' . $namespaces[$ns] . ':stage="hours"]')) {
-                $artefact->set('hours', 1);
+            $artefact->set('startdate', empty($startdate) ? $artefact->get('mtime') : $startdate);
+            $artefact->set('enddate', $enddate);
+
+            $location = $entry->xpath($namespaces[$ns] . ':spatial');
+            if (is_array($location) && count($location) == 1) {
+                $artefact->set('location', $location[0]);
+            }
+
+            $hours = $entry->xpath($namespaces[PluginImportLeap::NS_MAHARA] . ':hours');
+            if (is_array($hours) && count($hours) == 1) {
+                $artefact->set('hours', $hours[0]);
             }
         }
 
@@ -184,12 +194,9 @@ class LeapImportcpds extends LeapImportArtefactPlugin {
             if (empty($ancestorids[0])) {
                 throw new ImportException($importer, 'cpd artefact not found: ' . $ancestorid);
             }
-            $artefact = new ArtefactTypeactivity($artefactids[0]);
+            $artefact = new ArtefactTypeActivity($artefactids[0]);
             $artefact->set('parent', $ancestorids[0]);
             $artefact->commit();
         }
     }
-
 }
-
-?>

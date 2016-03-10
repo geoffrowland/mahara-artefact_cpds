@@ -1,30 +1,42 @@
 {include file="header.tpl"}
-<div id="cpdswrap">
-    <div class="rbuttons">
-        <a class="btn" href="{$WWWROOT}artefact/cpds/new.php?id={$cpd}">{str section="artefact.cpds" tag="newactivity"}</a>
+<div class="btn-top-right btn-group btn-group-top">
+    <a <a class="btn btn-default settings" href="{$WWWROOT}artefact/cpds/new.php?id={$cpd}">
+        <span class="icon icon-lg icon-plus left"></span>
+        {str section="artefact.cpds" tag="newactivity"}
+    </a>
+</div>
+<div id="cpdswrap" class="view-container">
+    {if $tags}
+    <p class="tags">
+        <strong>{str tag=tags}:</strong>
+        {list_tags owner=$owner tags=$tags}
+    </p>
+    {/if}
+
+    {if !$activities.data}
+    <div class="no-results">
+        {str tag="cpdsactivitiesdesc" section="artefact.cpds"}
+        <p class="metadata">{$strnoactivitiesaddone|safe}</p>
     </div>
-    <p class="detail">{$description|clean_html|safe}</p>
-    {if $tags}<p class="tags s"><label>{str tag=tags}:</label> {list_tags owner=$owner tags=$tags}</p>{/if}
-{if !$activities.data}
-    <div>{str tag="cpdsactivitiesdesc" section="artefact.cpds"}</div>
-    <div class="message">{$strnoactivitiesaddone|safe}</div>
-{else}
-<table id="activitieslist" class="fullwidth listing">
-    <thead>
-        <tr>
-            <th>{str tag='startdate' section='artefact.cpds'}</th>
-            <th>{str tag='enddate' section='artefact.cpds'}</th>
-            <th>{str tag='title' section='artefact.cpds'}</th>
-            <th>{str tag='description' section='artefact.cpds'}</th>
-            <th class="right">{str tag='hours' section='artefact.cpds'}</th>
-            <th class="cpdscontrols"></th>
-        </tr>
-    </thead>
-    <tbody>
-        {$activities.tablerows|safe}
-    </tbody>
-</table>
-   {$activities.pagination|safe}
-{/if}
+    {else}
+    <div class="table-responsive">
+        <table id="activitieslist" class="listing table table-striped text-small">
+            <thead>
+                <tr>
+                    <th>{str tag='startdate' section='artefact.cpds'}</th>
+                    <th>{str tag='enddate' section='artefact.cpds'}</th>
+                    <th>{str tag='title' section='artefact.cpds'}</th>
+                    <th>{str tag='description' section='artefact.cpds'}</th>
+                    <th>{str tag='hours' section='artefact.cpds'}</th>
+                    <th class="cpdscontrols"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {$activities.tablerows|safe}
+            </tbody>
+        </table>
+    </div>
+    {$activities.pagination|safe}
+    {/if}
 </div>
 {include file="footer.tpl"}

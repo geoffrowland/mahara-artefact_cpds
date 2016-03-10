@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="artefact/plans/db" VERSION="20110515" COMMENT="XMLDB file for MyCPDs Artefact Mahara tables"
+<XMLDB PATH="artefact/cpds/db" VERSION="20110704" COMMENT="XMLDB file for MyCPDs Artefact Mahara tables"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="../../lib/xmldb/xmldb.xsd"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
 <TABLES>
 
