@@ -1,8 +1,7 @@
 <?php
 /**
  * Mahara: Electronic portfolio, weblog, resume builder and social networking
- * Copyright (C) 2006-2009 Catalyst IT Ltd and others; see:
- *                         http://wiki.mahara.org/Contributors
+ * Copyright (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +19,8 @@
  * @package    mahara
  * @subpackage artefact-cpds
  * @author     James Kerrigan
- * @author     Geoffrey Rowland 
+ * @author     Geoffrey Rowland
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
- * @copyright  (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  */
 
@@ -35,7 +33,7 @@ require_once(get_config('docroot') . 'blocktype/lib.php');
 require_once(get_config('docroot') . 'artefact/cpds/blocktype/cpds/lib.php');
 
 $offset = param_integer('offset', 0);
-$limit = param_integer('limit', 20);
+$limit = param_integer('limit', 10);
 
 if ($blockid = param_integer('block', null)) {
     $bi = new BlockInstance($blockid);
@@ -44,25 +42,27 @@ if ($blockid = param_integer('block', null)) {
     $activities = ArtefactTypeActivity::get_activities($configdata['artefactid'], $offset, $limit);
 
     $template = 'artefact:cpds:activityrows.tpl';
+    $baseurl = $bi->get_view()->get_url();
+    $baseurl .= ((false === strpos($baseurl, '?')) ? '?' : '&') . 'block=' . $blockid;
     $pagination = array(
-        'baseurl'   => $bi->get_view()->get_url() . '&block=' . $blockid,
-        'id'        => 'block' . $blockid . '_pagination',
-        'datatable' => 'activitytable_' . $blockid,
+        'baseurl'    => $baseurl,
+        'id'         => 'block' . $blockid . '_pagination',
+        'datatable'  => 'activitytable_' . $blockid,
         'jsonscript' => 'artefact/cpds/viewactivities.json.php',
     );
 }
 else {
-    $cpdid = param_integer('artefact');
-    $viewid = param_integer('view');
-    $options = array('viewid' => $viewid);
+    $cpdid      = param_integer('artefact');
+    $viewid     = param_integer('view');
+    $options    = array('viewid' => $viewid);
     $activities = ArtefactTypeActivity::get_activities($cpdid, $offset, $limit);
 
-    $template = 'artefact:cpds:activityrows.tpl';
-    $baseurl = get_config('wwwroot') . 'view/artefact.php?artefact=' . $cpdid . '&view=' . $options['viewid'];
+    $template   = 'artefact:cpds:activityrows.tpl';
+    $baseurl    = get_config('wwwroot') . 'artefact/artefact.php?artefact=' . $cpdid . '&view=' . $options['viewid'];
     $pagination = array(
-        'baseurl' => $baseurl,
-        'id' => 'activity_pagination',
-        'datatable' => 'activitylist',
+        'baseurl'    => $baseurl,
+        'id'         => 'activity_pagination',
+        'datatable'  => 'activitylist',
         'jsonscript' => 'artefact/cpds/viewactivities.json.php',
     );
 

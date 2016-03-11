@@ -1,19 +1,49 @@
 {$totalhours = 0}
 {foreach from=$activities.data item=activity}
-    <tr class="{cycle values='r0,r1'}" style="width:100%" >
-        <td class="c1">{$activity->startdate}</td>
-        <td class="c2">{$activity->enddate}</td>
-        {if $activity->description}
-            <td class="c3"><a class="activity-title" href="">{$activity->title} {str tag='at' section='artefact.cpds'} {$activity->location}</a>
-            <div class="activity-desc hidden" id="activity-desc-{$activity->id}">{$activity->description|clean_html|safe}</div></td>
-        {else}
-            <td class="c3">{$activity->title} {str tag='at' section='artefact.cpds'} {$activity->location}</td>
-        {/if}
-        <td class="c4 right">{$activity->hours}</td>
-    </tr>
-{$totalhours = $totalhours + $activity->hours}
+<div class="list-group-item list-group-item-default">
+    <a class="link-block collapsed" href="#expand-task-{$activity->id}" data-toggle="collapse" aria-expanded="false" aria-controls="expand-task-{$activity->id}">
+        <span>
+            {$activity->title}
+        </span>
+        <span class="pull-right">
+            <span class="text-small text-midtone text-inline">
+            {str tag='hours' section='artefact.cpds'}: {$activity->hours}
+            </span>
+            <span class="icon icon-chevron-down right collapse-indicator text-inline"></span>
+        </span>
+    </a>
+
+    <div class="collapse" id="expand-task-{$activity->id}">
+        <div class="panel-body">
+            <p class="text-small text-midtone">
+                {$activity->startdate}
+                {if $activity->enddate} - {$activity->enddate}{/if}
+            </p>
+
+            {if $activity->description}
+            <p>{$activity->description|clean_html|safe}</p>
+            {/if}
+
+            <p>
+                <strong>{str tag='location' section='artefact.cpds'}:</strong>
+                {$activity->location}
+            </p>
+
+            {if $activity->tags}
+            <div class="tags">
+                <strong>{str tag=tags}:</strong> {list_tags owner=$task->owner tags=$task->tags}
+            </div>
+            {/if}
+        </div>
+        {$totalhours = $totalhours + $activity->hours}
+    </div>
+</div>
 {/foreach}
-<tr></tr>
-<tr class="summaryhours">
-<th colspan="3" class="right">{str tag='totalhours' section='artefact.cpds'}</th><td class="c4 right totalhours">{number_format($totalhours, 1)}</td>
-</tr>
+<div class="list-group-item">
+    <div class="summaryhours">
+        <div class="text-right totalhours">
+            <strong>{str tag='totalhours' section='artefact.cpds'}:</strong> {number_format($totalhours, 1)}
+        </div>
+    </div>
+</div>
+

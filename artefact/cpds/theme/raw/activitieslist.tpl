@@ -1,25 +1,28 @@
-{auto_escape on}
 {$totalhours=0}
 {foreach from=$activities.data item=activity}
-        <tr class="{cycle values='r0,r1'}">
-            <td class="c1">{$activity->startdate}</td>
-            <td class="c2">{$activity->enddate}</td>
-            <td class="c3">{$activity->title} {str tag='at' section='artefact.cpds'} {$activity->location}</td>
-            <td class="c4">{$activity->description|clean_html|safe}</td>
-            <td class="c5 right">{$activity->hours}</td>
-            <td class="c6 buttonscell btns2 cpdscontrols">
-                <a href="{$WWWROOT}artefact/cpds/edit/activity.php?id={$activity->activity}" title="{str tag=edit}">
-                    <img src="{theme_url filename='images/btn_edit.png'}" alt="{str tag=edit}">
+    <tr>
+        <td>{$activity->startdate}</td>
+        <td>{$activity->enddate}</td>
+        <td>{$activity->title} ({$activity->location})</td>
+        <td>{$activity->description}</td>
+        <td class="hours text-right">{$activity->hours}</td>
+        <td class="control-buttons text-right">
+            <div class="btn-group">
+                <a href="{$WWWROOT}artefact/cpds/edit/activity.php?id={$activity->activity}" title="{str tag=edit}" class="btn btn-default btn-xs">
+                    <span class="icon icon-pencil icon-lg" aria-hidden="true" role="presentation"></span>
+                    <span class="sr-only">{str tag=edit}</span>
                 </a>
-                <a href="{$WWWROOT}artefact/cpds/delete/activity.php?id={$activity->activity}" title="{str tag=delete}">
-                    <img src="{theme_url filename='images/btn_deleteremove.png'}" alt="{str tag=delete}">
+                <a href="{$WWWROOT}artefact/cpds/delete/activity.php?id={$activity->activity}" title="{str tag=delete}" class="btn btn-default btn-xs">
+                    <span class="icon icon-trash text-danger icon-lg" aria-hidden="true" role="presentation"></span>
+                    <span class="sr-only">{str tag=delete}</span>
                 </a>
-            </td>
-        </tr>
+            </div>
+        </td>
+    </tr>
 {$totalhours = $totalhours + $activity->hours}
 {/foreach}
-<tr></tr>
-<tr class="summaryhours">
-<th colspan="4" class="right">{str tag='totalhours' section='artefact.cpds'}</th><td class="right totalhours">{number_format($totalhours,1)}</td><td></td>
-</tr>
-{/auto_escape}
+    <tr class="summaryhours">
+        <th colspan="4" class="text-right">{str tag='totalhours' section='artefact.cpds'}</th>
+        <td class="text-right totalhours">{number_format($totalhours,1)}</td>
+        <td></td>
+    </tr>

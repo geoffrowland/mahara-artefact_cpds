@@ -1,8 +1,7 @@
 <?php
 /**
  * Mahara: Electronic portfolio, weblog, resume builder and social networking
- * Copyright (C) 2006-2009 Catalyst IT Ltd and others; see:
- *                         http://wiki.mahara.org/Contributors
+ * Copyright (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +19,8 @@
  * @package    mahara
  * @subpackage artefact-cpds
  * @author     James Kerrigan
- * @author     Geoffrey Rowland 
+ * @author     Geoffrey Rowland
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
- * @copyright  (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  */
 
@@ -33,9 +31,9 @@ require_once(dirname(dirname(dirname(dirname(__FILE__)))) . '/init.php');
 require_once('pieforms/pieform.php');
 require_once('pieforms/pieform/elements/calendar.php');
 require_once(get_config('docroot') . 'artefact/lib.php');
-safe_require('artefact','cpds');
+safe_require('artefact', 'cpds');
 
-define('TITLE', get_string('editactivity','artefact.cpds'));
+define('TITLE', get_string('editactivity', 'artefact.cpds'));
 
 $id = param_integer('id');
 $activity = new ArtefactTypeActivity($id);
@@ -43,11 +41,9 @@ if (!$USER->can_edit_artefact($activity)) {
     throw new AccessDeniedException(get_string('accessdenied', 'error'));
 }
 
-$form = ArtefactTypeactivity::get_form($activity->get('parent'), $activity);
+$form = ArtefactTypeActivity::get_form($activity->get('parent'), $activity);
 
 $smarty = smarty();
 $smarty->assign('editform', $form);
-$smarty->assign('PAGEHEADING', hsc(get_string("editingactivity", "artefact.cpds")));
+$smarty->assign('PAGEHEADING', hsc(get_string("editactivity", "artefact.cpds")));
 $smarty->display('artefact:cpds:edit.tpl');
-
-?>

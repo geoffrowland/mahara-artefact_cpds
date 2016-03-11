@@ -1,8 +1,7 @@
 <?php
 /**
  * Mahara: Electronic portfolio, weblog, resume builder and social networking
- * Copyright (C) 2006-2009 Catalyst IT Ltd and others; see:
- *                         http://wiki.mahara.org/Contributors
+ * Copyright (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,15 +19,14 @@
  * @package    mahara
  * @subpackage artefact-cpds
  * @author     James Kerrigan
- * @author     Geoffrey Rowland 
+ * @author     Geoffrey Rowland
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
- * @copyright  (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  */
 
 defined('INTERNAL') || die();
 
-class LeapExportElementcpd extends LeapExportElement {
+class LeapExportElementCPD extends LeapExportElement {
 
     public function get_leap_type() {
         return 'cpd';
@@ -39,21 +37,33 @@ class LeapExportElementcpd extends LeapExportElement {
     }
 }
 
-class LeapExportElementactivity extends LeapExportElementcpd {
+class LeapExportElementActivity extends LeapExportElementCPD {
 
     public function assign_smarty_vars() {
         parent::assign_smarty_vars();
-        $this->smarty->assign('completion', $this->artefact->get('hours') ? 'hours' : 'cpdned');
+        $this->smarty->assign('hours', $this->artefact->get('hours'));
+        $this->smarty->assign('location', $this->artefact->get('location'));
     }
 
     public function get_dates() {
-        return array(
-            array(
-                'point' => 'target',
+        $dates     = array();
+        $startdate = $this->artefact->get('startdate');
+        $enddate   = $this->artefact->get('enddate');
+
+        if (isset($startdate)) {
+            $dates[] = array(
+                'point' => 'start',
                 'date'  => format_date($this->artefact->get('startdate'), 'strftimew3cdate'),
-            ),
-        );
+            );
+        }
+
+        if (isset($enddate)) {
+            $dates[] = array(
+                'point' => 'end',
+                'date'  => format_date($this->artefact->get('enddate'), 'strftimew3cdate'),
+            );
+        }
+
+        return $dates;
     }
 }
-
-?>

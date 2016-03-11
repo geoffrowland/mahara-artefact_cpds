@@ -1,8 +1,7 @@
 <?php
 /**
  * Mahara: Electronic portfolio, weblog, resume builder and social networking
- * Copyright (C) 2006-2009 Catalyst IT Ltd and others; see:
- *                         http://wiki.mahara.org/Contributors
+ * Copyright (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +19,8 @@
  * @package    mahara
  * @subpackage artefact-cpds
  * @author     James Kerrigan
- * @author     Geoffrey Rowland 
+ * @author     Geoffrey Rowland
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
- * @copyright  (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  */
 
@@ -31,8 +29,7 @@ defined('INTERNAL') || die();
 $string['title'] = 'Your CPD';
 $string['description'] = 'Display your CPD list';
 $string['defaulttitledescription'] = 'If this is left empty the title of the CPD will be used.';
-$string['newercpds'] = 'Newer CPD';
+$string['newercpds'] = 'Newer CPDs';
 $string['nocpdsaddone'] = 'No CPD yet. %sAdd one%s!';
-$string['oldercpds'] = 'Older CPD';
-$string['cpdstoshow'] = 'CPD to show';
-?>
+$string['oldercpds'] = 'Older CPDs';
+$string['cpdstoshow'] = 'CPDs to show';

@@ -1,8 +1,7 @@
 <?php
 /**
  * Mahara: Electronic portfolio, weblog, resume builder and social networking
- * Copyright (C) 2006-2009 Catalyst IT Ltd and others; see:
- *                         http://wiki.mahara.org/Contributors
+ * Copyright (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,18 +19,17 @@
  * @package    mahara
  * @subpackage artefact-cpds
  * @author     James Kerrigan
- * @author     Geoffrey Rowland 
+ * @author     Geoffrey Rowland
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
- * @copyright  (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  */
 
 defined('INTERNAL') || die();
 
-class HtmlExportcpds extends HtmlExportArtefactPlugin {
+class HtmlExportCpds extends HtmlExportArtefactPlugin {
 
     public function pagination_data($artefact) {
-        if ($artefact instanceof ArtefactTypecpd) {
+        if ($artefact instanceof ArtefactTypeCPD) {
             return array(
                 'perpage'    => 10,
                 'childcount' => $artefact->count_children(),
@@ -42,7 +40,7 @@ class HtmlExportcpds extends HtmlExportArtefactPlugin {
 
     public function dump_export_data() {
         foreach ($this->exporter->get('artefacts') as $artefact) {
-            if ($artefact instanceof ArtefactTypecpd) {
+            if ($artefact instanceof ArtefactTypeCPD) {
                 $this->paginate($artefact);
             }
         }
@@ -52,9 +50,9 @@ class HtmlExportcpds extends HtmlExportArtefactPlugin {
         $smarty = $this->exporter->get_smarty();
         $cpds = array();
         foreach ($this->exporter->get('artefacts') as $artefact) {
-            if ($artefact instanceof ArtefactTypecpd) {
+            if ($artefact instanceof ArtefactTypeCPD) {
                 $cpds[] = array(
-                    'link' => 'files/cpds/' . PluginExportHtml::text_to_path($artefact->get('title')) . '/index.html',
+                    'link'  => 'files/cpds/' . PluginExportHtml::text_to_path($artefact->get('title')) . '/index.html',
                     'title' => $artefact->get('title'),
                 );
             }
@@ -62,7 +60,7 @@ class HtmlExportcpds extends HtmlExportArtefactPlugin {
         $smarty->assign('cpds', $cpds);
 
         return array(
-            'title' => get_string('cpds', 'artefact.cpds'),
+            'title'       => get_string('cpds', 'artefact.cpds'),
             'description' => $smarty->fetch('export:html/cpds:summary.tpl'),
         );
     }

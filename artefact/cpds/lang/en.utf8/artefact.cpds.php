@@ -1,7 +1,7 @@
 <?php
 /**
  * Mahara: Electronic portfolio, weblog, resume builder and social networking
- * Copyright (C) 2006-2008 Catalyst IT Ltd (http://www.catalyst.net.nz)
+ * Copyright (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,8 @@
  * @package    mahara
  * @subpackage artefact-cpds
  * @author     James Kerrigan
- * @author     Geoffrey Rowland 
+ * @author     Geoffrey Rowland
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
- * @copyright  (C) 2011 James Kerrigan and Geoffrey Rowland geoff.rowland@yeovil.ac.uk
  *
  */
 
@@ -33,7 +32,6 @@ $string['deletecpdconfirm'] = 'Are you sure you wish to delete this CPD? Deletin
 $string['deletecpd'] = 'Delete CPD';
 $string['deletethiscpd'] = 'Delete CPD: \'%s\'';
 $string['editcpd'] = 'Edit CPD';
-$string['editingcpd'] = 'Editing CPD';
 $string['manageactivities'] = 'Manage activities';
 $string['mycpds'] = 'Continuing Professional Development';
 $string['newcpd'] = 'New CPD';
@@ -52,7 +50,6 @@ $string['title'] = 'Title';
 $string['titledesc'] = 'The title will be used to display each activity in this CPD block.';
 
 /* activities */
-$string['at'] = 'at';
 $string['allactivities'] = 'All activities';
 $string['hours'] = 'Hours';
 $string['totalhours'] = 'Total hours';
@@ -69,11 +66,21 @@ $string['newactivity'] = 'New activity';
 $string['noactivities'] = 'No activities to display.';
 $string['noactivitiesaddone'] = 'No activities yet. %sAdd one%s!';
 $string['saveactivity'] = 'Save activity';
-$string['activity'] = 'Activity';
-$string['activities'] = 'Activities';
+$string['activitytitle'] = 'Activity';
+$string['activity'] = 'activity';
+$string['activities'] = 'activities';
 $string['activitydeletedsuccessfully'] = 'activity deleted successfully.';
 $string['activitiesavedsuccessfully'] = 'activity saved successfully.';
 $string['location'] = 'Location';
 $string['locationdesc'] = 'The location of the CPD activity.';
 
-?>
+/* progress bar */
+$string['progress_cpd'] = array(
+    'Add a CPD',
+    'Add %s CPDs',
+);
+$string['progress_activity'] = array(
+    'Add an activity to any CPD',
+    'Add %s activities to any CPD',
+);
+
