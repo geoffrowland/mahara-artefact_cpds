@@ -611,9 +611,13 @@ class ArtefactTypeActivity extends ArtefactType {
             foreach ($results as $result) {
                 $grandtotalhours = $grandtotalhours + $result->hours;
                 if (!empty($result->startdate)) {
-                    $result->startdate = strftime(get_string('strftimedate'), $result->startdate);
+                    $format = get_string('strftimedate');
+                    if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
+                        $format = preg_replace('#(?<!%)((?:%%)*)%e#', '\1%#d', $format);
+                    }
+                    $result->startdate = strftime($format, $result->startdate);
                     if (!empty($result->enddate)) {
-                        $result->enddate = strftime(get_string('strftimedate'), $result->enddate);
+                        $result->enddate = strftime($format, $result->enddate);
                     }
                 }
             }
