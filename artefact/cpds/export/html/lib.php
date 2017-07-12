@@ -52,7 +52,7 @@ class HtmlExportCpds extends HtmlExportArtefactPlugin {
         foreach ($this->exporter->get('artefacts') as $artefact) {
             if ($artefact instanceof ArtefactTypeCPD) {
                 $cpds[] = array(
-                    'link'  => 'files/cpds/' . PluginExportHtml::text_to_path($artefact->get('title')) . '/index.html',
+                    'link' => 'files/cpds/' . PluginExportHtml::text_to_URLpath(PluginExportHtml::text_to_filename($artefact->get('title'))) . '/index.html',
                     'title' => $artefact->get('title'),
                 );
             }
