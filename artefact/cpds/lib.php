@@ -491,7 +491,7 @@ class ArtefactTypeActivity extends ArtefactType {
                 ),
                 'defaultvalue' => null,
                 'title'        => get_string('startdate', 'artefact.cpds'),
-                'description'  => get_string('dateformatguide'),
+                'description'  => get_string('dateformatguide', 'artefact.cpds'),
                 'rules'        => array(
                     'required' => true,
                 ),
@@ -504,7 +504,7 @@ class ArtefactTypeActivity extends ArtefactType {
                 ),
                 'defaultvalue' => null,
                 'title'        => get_string('enddate', 'artefact.cpds'),
-                'description'  => get_string('dateformatguide'),
+                'description'  => get_string('dateformatguide', 'artefact.cpds'),
                 'rules'        => array(
                     'required' => false,
                 ),
