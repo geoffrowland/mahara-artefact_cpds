@@ -462,6 +462,7 @@ class ArtefactTypeActivity extends ArtefactType {
     *
     */
     public static function get_activityform_elements($parent, $activity=null) {
+        require_once(get_config('libroot') . 'pieforms/pieform/elements/calendar.php');
         $elements = array(
             'title' => array(
                 'type'         => 'text',
@@ -491,7 +492,7 @@ class ArtefactTypeActivity extends ArtefactType {
                 ),
                 'defaultvalue' => null,
                 'title'        => get_string('startdate', 'artefact.cpds'),
-                'description'  => get_string('dateformatguide'),
+                'description'  => get_string('dateformatguide1', 'mahara', pieform_element_calendar_human_readable_dateformat()),
                 'rules'        => array(
                     'required' => true,
                 ),
@@ -504,7 +505,7 @@ class ArtefactTypeActivity extends ArtefactType {
                 ),
                 'defaultvalue' => null,
                 'title'        => get_string('enddate', 'artefact.cpds'),
-                'description'  => get_string('dateformatguide'),
+                'description'  => get_string('dateformatguide1', 'mahara', pieform_element_calendar_human_readable_dateformat()),
                 'rules'        => array(
                     'required' => false,
                 ),
