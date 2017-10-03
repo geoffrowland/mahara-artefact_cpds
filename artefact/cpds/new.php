@@ -46,7 +46,7 @@ else {
     $form = ArtefactTypeCPD::get_form();
 }
 
-$smarty =& smarty();
-$smarty->assign_by_ref('form', $form);
-$smarty->assign_by_ref('PAGEHEADING', hsc(TITLE));
+$smarty = smarty();
+$smarty->assign('form', $form);
+$smarty->assign('PAGEHEADING', hsc(TITLE));
 $smarty->display('artefact:cpds:new.tpl');

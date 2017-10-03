@@ -136,7 +136,7 @@ class ArtefactTypeCPD extends ArtefactType {
      */
     public static function build_cpds_list_html(&$cpds) {
         $smarty = smarty_core();
-        $smarty->assign_by_ref('cpds', $cpds);
+        $smarty->assign('cpds', $cpds);
         $cpds['tablerows'] = $smarty->fetch('artefact:cpds:cpdslist.tpl');
         $pagination = build_pagination(array(
             'id'                      => 'cpdlist_pagination',
@@ -291,7 +291,7 @@ class ArtefactTypeCPD extends ArtefactType {
         ArtefactTypeActivity::render_activities($activities, $template, $options, $pagination);
 
         $smarty = smarty_core();
-        $smarty->assign_by_ref('activities', $activities);
+        $smarty->assign('activities', $activities);
         if (isset($options['viewid'])) {
             $smarty->assign('artefacttitle', '<a href="' . $baseurl . '">' . hsc($this->get('title')) . '</a>');
         }
@@ -418,7 +418,7 @@ class ArtefactTypeActivity extends ArtefactType {
         db_commit();
     }
 
-    public static function bulk_delete($artefactids) {
+    public static function bulk_delete($artefactids, $log=false) {
         if (empty($artefactids)) {
             return;
         }
@@ -642,7 +642,7 @@ class ArtefactTypeActivity extends ArtefactType {
      */
     public static function build_activities_list_html(&$activities) {
         $smarty = smarty_core();
-        $smarty->assign_by_ref('activities', $activities);
+        $smarty->assign('activities', $activities);
         $activities['tablerows'] = $smarty->fetch('artefact:cpds:activitieslist.tpl');
         $pagination = build_pagination(array(
             'id'                      => 'activitylist_pagination',
@@ -668,8 +668,8 @@ class ArtefactTypeActivity extends ArtefactType {
     // @TODO: make blocktype use this too
     public static function render_activities(&$activities, $template, $options, $pagination) {
         $smarty = smarty_core();
-        $smarty->assign_by_ref('activities', $activities);
-        $smarty->assign_by_ref('options', $options);
+        $smarty->assign('activities', $activities);
+        $smarty->assign('options', $options);
         $activities['tablerows'] = $smarty->fetch($template);
 
         if ($activities['limit'] && $pagination) {

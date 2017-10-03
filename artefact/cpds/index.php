@@ -50,7 +50,7 @@ addLoadEvent(function () {
 EOF;
 
 $smarty = smarty(array('paginator'));
-$smarty->assign_by_ref('cpds', $cpds);
+$smarty->assign('cpds', $cpds);
 $smarty->assign('strnocpdsaddone',
     get_string('nocpdsaddone', 'artefact.cpds',
     '<a href="' . get_config('wwwroot') . 'artefact/cpds/new.php">', '</a>'));
