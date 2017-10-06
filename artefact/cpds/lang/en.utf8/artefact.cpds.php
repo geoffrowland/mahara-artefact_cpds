@@ -27,6 +27,7 @@
 defined('INTERNAL') || die();
 
 /* cpds */
+$string['dateformatguide'] = 'Use the format YYYY/MM/DD';
 $string['description'] = 'Description';
 $string['deletecpdconfirm'] = 'Are you sure you wish to delete this CPD? Deleting this CPD will also remove any activities it contains.';
 $string['deletecpd'] = 'Delete CPD';
