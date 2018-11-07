@@ -14,9 +14,9 @@
             {$activities.pagination|safe}
         </div>
         <script>
-        addLoadEvent(function() {literal}{{/literal}
+        jQuery(function() {literal}{{/literal}
             {$activities.pagination_js|safe}
-            removeElementClass('cpds_page_container', 'hidden');
+            jQuery('#cpds_page_container').removeClass('hidden');
         {literal}}{/literal});
         </script>
         {/if}

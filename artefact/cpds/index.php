@@ -44,7 +44,7 @@ $cpds = ArtefactTypeCPD::get_cpds($offset, $limit);
 ArtefactTypeCPD::build_cpds_list_html($cpds);
 
 $js = <<< EOF
-addLoadEvent(function () {
+jQuery(function () {
     {$cpds['pagination_js']}
 });
 EOF;

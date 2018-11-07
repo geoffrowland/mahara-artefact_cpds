@@ -184,7 +184,7 @@ class LeapImportCPDs extends LeapImportArtefactPlugin {
     /**
      * Set activity parents
      */
-    public static function setup_relationships(SimpleXMLElement $entry, PluginImportLeap $importer) {
+    public static function setup_relationships(SimpleXMLElement $entry, PluginImportLeap $importer, $strategy, array $otherentries) {
         if ($ancestorid = self::get_ancestor_entryid($entry, $importer)) {
             $ancestorids = $importer->get_artefactids_imported_by_entryid($ancestorid);
             $artefactids = $importer->get_artefactids_imported_by_entryid((string)$entry->id);

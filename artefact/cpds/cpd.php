@@ -51,7 +51,7 @@ $activities = ArtefactTypeActivity::get_activities($cpd->get('id'), $offset, $li
 ArtefactTypeActivity::build_activities_list_html($activities);
 
 $js = <<<EOF
-addLoadEvent(function () {
+jQuery(function () {
     {$activities['pagination_js']}
 });
 EOF;
