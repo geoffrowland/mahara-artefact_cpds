@@ -40,7 +40,7 @@ class PluginBlocktypeCpds extends PluginBlocktype {
         return array('general');
     }
 
-    public static function get_css_icon() {
+    public static function get_css_icon($blocktypename) {
         return 'check-square-o';
     }
 
@@ -107,7 +107,7 @@ class PluginBlocktypeCpds extends PluginBlocktype {
         return true;
     }
 
-    public static function instance_config_form($instance) {
+    public static function instance_config_form(BlockInstance $instance) {
         $configdata = $instance->get('configdata');
 
         $form = array(

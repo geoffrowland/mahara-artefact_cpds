@@ -44,13 +44,13 @@ $cpds = ArtefactTypeCPD::get_cpds($offset, $limit);
 ArtefactTypeCPD::build_cpds_list_html($cpds);
 
 $js = <<< EOF
-addLoadEvent(function () {
+jQuery(function () {
     {$cpds['pagination_js']}
 });
 EOF;
 
 $smarty = smarty(array('paginator'));
-$smarty->assign_by_ref('cpds', $cpds);
+$smarty->assign('cpds', $cpds);
 $smarty->assign('strnocpdsaddone',
     get_string('nocpdsaddone', 'artefact.cpds',
     '<a href="' . get_config('wwwroot') . 'artefact/cpds/new.php">', '</a>'));
