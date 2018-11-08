@@ -10,13 +10,13 @@
             {$activities.tablerows|safe}
         </div>
         {if $activities.pagination}
-        <div id="cpds_page_container" class="hidden">
+        <div id="cpds_page_container_{$blockid}" class="hidden">
             {$activities.pagination|safe}
         </div>
         <script>
         jQuery(function() {literal}{{/literal}
             {$activities.pagination_js|safe}
-            jQuery('#cpds_page_container').removeClass('hidden');
+            jQuery('#cpds_page_container_{$blockid}').removeClass('hidden');
         {literal}}{/literal});
         </script>
         {/if}
