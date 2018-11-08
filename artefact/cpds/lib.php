@@ -48,7 +48,7 @@ class PluginArtefactCPDs extends PluginArtefact {
             array(
                 'path'   => 'content/cpds',
                 'title'  => get_string('cpds', 'artefact.cpds'),
-                'url'    => 'artefact/cpds/',
+                'url'    => 'artefact/cpds/index.php',
                 'weight' => 40,
             ),
         );
