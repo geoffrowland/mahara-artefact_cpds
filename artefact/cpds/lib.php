@@ -150,7 +150,8 @@ class ArtefactTypeCPD extends ArtefactType {
             'previoustext'            => '',
             'nexttext'                => '',
             'lasttext'                => '',
-            'numbersincludefirstlast' => false,
+            'numbersincludefirstlast' => true,
+            'numbersincludeprevnext'  => 3,
             'resultcounttextsingular' => get_string('cpd', 'artefact.cpds'),
             'resultcounttextplural'   => get_string('cpds', 'artefact.cpds'),
         ));
@@ -210,7 +211,7 @@ class ArtefactTypeCPD extends ArtefactType {
             'type'  => 'submitcancel',
             'class' => 'btn-primary',
             'value' => array(get_string('savecpd', 'artefact.cpds'), get_string('cancel')),
-            'goto'  => get_config('wwwroot') . 'artefact/cpds/',
+            'goto'  => get_config('wwwroot') . 'artefact/cpds/index.php',
         );
         $cpdform = array(
             'name'             => empty($cpd) ? 'addcpd' : 'editcpd',
@@ -606,23 +607,25 @@ class ArtefactTypeActivity extends ArtefactType {
             ORDER BY at.startdate DESC", array($cpd), $offset, $limit))
             || ($results = array());
 
-        // format the date and calculate grand total of hours spent
-        $grandtotalhours = 0;
+        // format the date
         if (!empty($results)) {
             foreach ($results as $result) {
-                $grandtotalhours = $grandtotalhours + $result->hours;
                 if (!empty($result->startdate)) {
-                    $format = get_string('strftimedate');
-                    if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
-                        $format = preg_replace('#(?<!%)((?:%%)*)%e#', '\1%#d', $format);
-                    }
-                    $result->startdate = strftime($format, $result->startdate);
+                    $result->startdateshort = strftime(get_string('strftimedateshort'), $result->startdate);
+                    $result->startdate = strftime(get_string('strftimedate'), $result->startdate);
                     if (!empty($result->enddate)) {
-                        $result->enddate = strftime($format, $result->enddate);
+                        $result->enddateshort = strftime(get_string('strftimedateshort'), $result->enddate);
+                        $result->enddate = strftime(get_string('strftimedate'), $result->enddate);
                     }
                 }
             }
         }
+        // calculate grand total of hours spent
+        $grandtotalhours = get_field_sql("
+            SELECT SUM(at.hours)
+            FROM {artefact} a
+            JOIN {artefact_cpds_activity} at ON at.artefact = a.id
+            WHERE a.artefacttype = 'activity' AND a.parent = ?", array($cpd));
 
         $result = array(
             'grandtotalhours' => $grandtotalhours,
@@ -658,7 +661,8 @@ class ArtefactTypeActivity extends ArtefactType {
             'previoustext'            => '',
             'nexttext'                => '',
             'lasttext'                => '',
-            'numbersincludefirstlast' => false,
+            'numbersincludefirstlast' => true,
+            'numbersincludeprevnext'  => 3,
             'resultcounttextsingular' => get_string('activity', 'artefact.cpds'),
             'resultcounttextplural'   => get_string('activities', 'artefact.cpds'),
         ));
@@ -667,10 +671,12 @@ class ArtefactTypeActivity extends ArtefactType {
     }
 
     // @TODO: make blocktype use this too
-    public static function render_activities(&$activities, $template, $options, $pagination) {
+    public static function render_activities(&$activities, $template, $options, $pagination, $editing = false, $versioning = false) {
         $smarty = smarty_core();
         $smarty->assign('activities', $activities);
         $smarty->assign('options', $options);
+        $smarty->assign('block', (!empty($options['block']) ? $options['block'] : null));
+        $smarty->assign('versioning', $versioning);
         $activities['tablerows'] = $smarty->fetch($template);
 
         if ($activities['limit'] && $pagination) {
@@ -683,7 +689,8 @@ class ArtefactTypeActivity extends ArtefactType {
                 'count'                   => $activities['count'],
                 'limit'                   => $activities['limit'],
                 'offset'                  => $activities['offset'],
-                'numbersincludefirstlast' => false,
+                'numbersincludefirstlast' => true,
+                'numbersincludeprevnext'  => 3,
                 'resultcounttextsingular' => get_string('activity', 'artefact.cpds'),
                 'resultcounttextplural'   => get_string('activities', 'artefact.cpds'),
             ));

@@ -41,7 +41,7 @@ class PluginBlocktypeCpds extends PluginBlocktype {
     }
 
     public static function get_css_icon($blocktypename) {
-        return 'check-square-o';
+        return 'plans';
     }
 
     public static function get_instance_title(BlockInstance $bi) {
@@ -56,7 +56,7 @@ class PluginBlocktypeCpds extends PluginBlocktype {
         return '';
     }
 
-    public static function render_instance(BlockInstance $instance, $editing=false) {
+    public static function render_instance(BlockInstance $instance, $editing=false, $versioning=false) {
         global $exporter;
 
         require_once(get_config('docroot') . 'artefact/lib.php');
@@ -83,7 +83,8 @@ class PluginBlocktypeCpds extends PluginBlocktype {
                     'jsonscript' => 'artefact/cpds/viewactivities.json.php',
                 );
             }
-            ArtefactTypeActivity::render_activities($activities, $template, $configdata, $pagination);
+            $configdata['block'] = $blockid;
+            ArtefactTypeActivity::render_activities($activities, $template, $configdata, $pagination, $editing, $versioning);
 
             if ($exporter && $activities['count'] > $activities['limit']) {
                 $artefacturl = get_config('wwwroot') . 'artefact/artefact.php?artefact=' . $configdata['artefactid']
@@ -96,7 +97,8 @@ class PluginBlocktypeCpds extends PluginBlocktype {
             $smarty->assign('tags', $cpd->get('tags'));
         }
         else {
-            $smarty->assign('nocpds', 'blocktype.cpds/cpds');
+            $smarty->assign('editing', $editing);
+            $smarty->assign('nocpds', get_string('nocpdsselectone', 'blocktype.cpds/cpds'));
         }
         $smarty->assign('blockid', $instance->get('id'));
         return $smarty->fetch('blocktype:cpds:content.tpl');
@@ -109,11 +111,22 @@ class PluginBlocktypeCpds extends PluginBlocktype {
 
     public static function instance_config_form(BlockInstance $instance) {
         $configdata = $instance->get('configdata');
-
-        $form = array(
-            self::artefactchooser_element((isset($configdata['artefactid'])) ? $configdata['artefactid'] : null)
-        );
-
+        $owner = $instance->get_view()->get('owner');
+        if ($owner) {
+            $form = array(
+                self::artefactchooser_element((isset($configdata['artefactid'])) ? $configdata['artefactid'] : null)
+            );
+        }
+        else {
+            $form['blocktemplatehtml'] = array(
+                'type' => 'html',
+                'value' => get_string('blockinstanceconfigownerchange', 'mahara'),
+            );
+            $form['blocktemplate'] = array(
+                'type'    => 'hidden',
+                'value'   => 1,
+            );
+        }
         return $form;
     }
 
@@ -133,6 +146,23 @@ class PluginBlocktypeCpds extends PluginBlocktype {
     }
 
     public static function allowed_in_view(View $view) {
-        return $view->get('owner') != null;
+        return true;
+    }
+
+    public static function rewrite_blockinstance_config(View $view, $configdata) {
+        safe_require('artefact', 'cpds');
+        if ($view->get('owner') !== null && !empty($configdata['blocktemplate'])) {
+            if ($artefactid = get_column_sql('
+                SELECT a.id FROM {artefact} a
+                WHERE a.owner = ? AND a.artefacttype = ? LIMIT 1', array($view->get('owner'), 'cpd'))) {
+                $configdata['artefactid'] = $artefactid[0];
+            }
+            else {
+                $configdata['artefactid'] = null;
+            }
+            unset($configdata['blocktemplatehtml']);
+            unset($configdata['blocktemplate']);
+        }
+        return $configdata;
     }
 }

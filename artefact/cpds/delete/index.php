@@ -47,8 +47,9 @@ $deleteform = array(
     'elements'   => array(
         'submit' => array(
             'type'  => 'submitcancel',
+            'class' => 'btn-secondary',
             'value' => array(get_string('deletecpd', 'artefact.cpds'), get_string('cancel')),
-            'goto'  => get_config('wwwroot') . '/artefact/cpds/',
+            'goto'  => get_config('wwwroot') . '/artefact/cpds/index.php',
         ),
     )
 );
@@ -68,5 +69,5 @@ function deletecpdform_submit(Pieform $form, $values) {
     $todelete->delete();
     $SESSION->add_ok_msg(get_string('cpddeletedsuccessfully', 'artefact.cpds'));
 
-    redirect('/artefact/cpds/');
+    redirect('/artefact/cpds/index.php');
 }

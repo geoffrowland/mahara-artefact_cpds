@@ -31,5 +31,6 @@ $string['description'] = 'Display your CPD list';
 $string['defaulttitledescription'] = 'If this is left empty the title of the CPD will be used.';
 $string['newercpds'] = 'Newer CPDs';
 $string['nocpdsaddone'] = 'No CPD yet. %sAdd one%s!';
+$string['nocpdsselectone'] = 'No CPDs selected';
 $string['oldercpds'] = 'Older CPDs';
 $string['cpdstoshow'] = 'CPDs to show';

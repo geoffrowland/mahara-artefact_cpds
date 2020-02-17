@@ -1,7 +1,10 @@
-<div class="panel-body flush">
+{if $nocpds && $editing}
+    <p class="editor-description">{$nocpds}</p>
+{else}
+<div class="card-body flush">
     <p class="description">{$description}</p>
     {if $tags}
-    <p class="tags">
+    <p class="tags text-small">
         <strong>{str tag=tags}:</strong> {list_tags owner=$owner tags=$tags}
     </p>
     {/if}
@@ -24,4 +27,4 @@
         <div class="lead text-center content-text">{str tag='noactivities' section='artefact.cpds'}</div>
     {/if}
 </div>
-
+{/if}

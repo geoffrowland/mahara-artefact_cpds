@@ -1,6 +1,6 @@
 {include file="header.tpl"}
 <div class="btn-top-right btn-group btn-group-top">
-    <a <a class="btn btn-default settings" href="{$WWWROOT}artefact/cpds/new.php?id={$cpd}">
+    <a <a class="btn btn-secondary settings" href="{$WWWROOT}artefact/cpds/new.php?id={$cpd}">
         <span class="icon icon-lg icon-plus left"></span>
         {str section="artefact.cpds" tag="newactivity"}
     </a>
@@ -16,7 +16,7 @@
     {if !$activities.data}
     <div class="no-results">
         {str tag="cpdsactivitiesdesc" section="artefact.cpds"}
-        <p class="metadata">{$strnoactivitiesaddone|safe}</p>
+        <p>{$strnoactivitiesaddone|safe}</p>
     </div>
     {else}
     <div class="table-responsive">

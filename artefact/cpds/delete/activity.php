@@ -47,6 +47,7 @@ $deleteform = array(
     'elements'   => array(
         'submit' => array(
             'type'  => 'submitcancel',
+            'class' => 'btn-secondary',
             'value' => array(get_string('deleteactivity', 'artefact.cpds'), get_string('cancel')),
             'goto'  => get_config('wwwroot') . '/artefact/cpds/cpd.php?id=' . $todelete->get('parent'),
         ),
