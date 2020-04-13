@@ -1,6 +1,6 @@
 {include file="header.tpl"}
 <div class="btn-top-right btn-group btn-group-top">
-    <a <a class="btn btn-secondary settings" href="{$WWWROOT}artefact/cpds/new.php?id={$cpd}">
+    <a class="btn btn-secondary settings" href="{$WWWROOT}artefact/cpds/new.php?id={$cpd}">
         <span class="icon icon-lg icon-plus left"></span>
         {str section="artefact.cpds" tag="newcpd"}
     </a>

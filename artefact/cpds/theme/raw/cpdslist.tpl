@@ -12,11 +12,11 @@
                      <a href="{$WWWROOT}artefact/cpds/edit/index.php?id={$cpd->id}" title="{str tag="edit"}" class="btn btn-secondary btn-sm">
                         <span class="icon icon-lg icon-pencil-alt" aria-hidden="true" role="presentation"></span>
                         <span class="sr-only">{str tag=edit}</span>
-                    </a>
+                     </a>
                      <a href="{$WWWROOT}artefact/cpds/cpd.php?id={$cpd->id}" title="{str tag=manageactivities section=artefact.cpds}" class="btn btn-secondary btn-sm">
                         <span class="icon icon-lg icon-cog" aria-hidden="true" role="presentation"></span>
                         <span class="sr-only">{str tag=managetasks section=artefact.plans}</span>
-                    </a>
+                     </a>
                      <a href="{$WWWROOT}artefact/cpds/delete/index.php?id={$cpd->id}" title="{str tag="delete"}" class="btn btn-secondary btn-sm">
                         <span class="icon icon-trash text-danger icon-lg" aria-hidden="true" role="presentation"></span>
                         <span class="sr-only">{str tag=delete}</span>
