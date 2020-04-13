@@ -1,5 +1,5 @@
 {if $nocpds && $editing}
-    <p class="editor-description">{$nocpds}</p>
+    <div class="lead text-center content-text">{$nocpds}</div>
 {else}
 <div class="card-body flush">
     <p class="description">{$description}</p>

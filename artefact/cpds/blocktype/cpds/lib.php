@@ -98,7 +98,7 @@ class PluginBlocktypeCpds extends PluginBlocktype {
         }
         else {
             $smarty->assign('editing', $editing);
-            $smarty->assign('nocpds', get_string('nocpdsselectone', 'blocktype.cpds/cpds'));
+            $smarty->assign('nocpds', get_string('nocpdsselectone', 'artefact.cpds'));
         }
         $smarty->assign('blockid', $instance->get('id'));
         return $smarty->fetch('blocktype:cpds:content.tpl');
