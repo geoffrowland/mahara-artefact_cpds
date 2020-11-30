@@ -91,7 +91,6 @@ class ArtefactTypeCPD extends ArtefactType {
     }
 
     public static function get_icon($options=null) {
-        global $THEME;
         return false;
     }
 
@@ -150,8 +149,7 @@ class ArtefactTypeCPD extends ArtefactType {
             'previoustext'            => '',
             'nexttext'                => '',
             'lasttext'                => '',
-            'numbersincludefirstlast' => true,
-            'numbersincludeprevnext'  => 3,
+            'numbersincludefirstlast' => false,
             'resultcounttextsingular' => get_string('cpd', 'artefact.cpds'),
             'resultcounttextplural'   => get_string('cpds', 'artefact.cpds'),
         ));
@@ -349,8 +347,7 @@ class ArtefactTypeActivity extends ArtefactType {
     }
 
     public static function get_icon($options=null) {
-        global $THEME;
-        return $THEME->get_url('images/cpdactivity.png', false, 'artefact/cpds');
+        return false;
     }
 
     public static function is_singular() {
@@ -611,13 +608,21 @@ class ArtefactTypeActivity extends ArtefactType {
         if (!empty($results)) {
             foreach ($results as $result) {
                 if (!empty($result->startdate)) {
-                    $result->startdateshort = strftime(get_string('strftimedateshort'), $result->startdate);
-                    $result->startdate = strftime(get_string('strftimedate'), $result->startdate);
+                    $format = get_string('strftimedate');
+                    $formatshort = get_string('strftimedateshort');
+                    if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
+                        $format = preg_replace('#(?<!%)((?:%%)*)%e#', '\1%#d', $format);
+                        $formatshort = preg_replace('#(?<!%)((?:%%)*)%e#', '\1%#d', $formatshort);
+                    }
+                    $result->startdateshort = strftime($formatshort, $result->startdate);
+                    $result->startdate = strftime($format, $result->startdate);
                     if (!empty($result->enddate)) {
-                        $result->enddateshort = strftime(get_string('strftimedateshort'), $result->enddate);
-                        $result->enddate = strftime(get_string('strftimedate'), $result->enddate);
+                        $result->enddateshort = strftime($formatshort, $result->enddate);
+                        $result->enddate = strftime($format, $result->enddate);
                     }
                 }
+                $result->tags = get_column('tag', 'tag', 'resourcetype', 'artefact', 'resourceid', $result->id);
+                $result->owner = null; // To avoid it being a link
             }
         }
         // calculate grand total of hours spent
@@ -661,8 +666,7 @@ class ArtefactTypeActivity extends ArtefactType {
             'previoustext'            => '',
             'nexttext'                => '',
             'lasttext'                => '',
-            'numbersincludefirstlast' => true,
-            'numbersincludeprevnext'  => 3,
+            'numbersincludefirstlast' => false,
             'resultcounttextsingular' => get_string('activity', 'artefact.cpds'),
             'resultcounttextplural'   => get_string('activities', 'artefact.cpds'),
         ));
@@ -689,8 +693,7 @@ class ArtefactTypeActivity extends ArtefactType {
                 'count'                   => $activities['count'],
                 'limit'                   => $activities['limit'],
                 'offset'                  => $activities['offset'],
-                'numbersincludefirstlast' => true,
-                'numbersincludeprevnext'  => 3,
+                'numbersincludefirstlast' => false,
                 'resultcounttextsingular' => get_string('activity', 'artefact.cpds'),
                 'resultcounttextplural'   => get_string('activities', 'artefact.cpds'),
             ));

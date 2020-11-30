@@ -27,7 +27,7 @@
                     <th>{str tag='enddate' section='artefact.cpds'}</th>
                     <th>{str tag='title' section='artefact.cpds'}</th>
                     <th>{str tag='description' section='artefact.cpds'}</th>
-                    <th>{str tag='hours' section='artefact.cpds'}</th>
+                    <th class="text-right">{str tag='hours' section='artefact.cpds'}</th>
                     <th class="cpdscontrols"></th>
                 </tr>
             </thead>

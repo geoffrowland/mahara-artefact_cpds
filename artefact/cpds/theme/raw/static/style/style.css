@@ -1,9 +1,7 @@
-.cpdstatus a {
-	margin-left: 5px;
+.cpd-collapsible .icon.collapse-indicator {
+    margin-top: 0.8125rem;
+    margin-right: 0.1875rem;
 }
-span.cpds-date {
-    padding-left: 10px;
-}
-.icon-cpd:before {
-    content: fa-content($fa-var-award);
+.cpds-date {
+    margin-bottom: 0;
 }

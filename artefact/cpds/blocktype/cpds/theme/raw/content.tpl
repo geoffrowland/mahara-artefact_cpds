@@ -1,15 +1,19 @@
 {if $nocpds && $editing}
     <div class="lead text-center content-text">{$nocpds}</div>
 {else}
-<div class="card-body flush">
-    <p class="description">{$description}</p>
-    {if $tags}
-    <p class="tags text-small">
-        <strong>{str tag=tags}:</strong> {list_tags owner=$owner tags=$tags}
-    </p>
+<div class="listing">
+    {if $description || $tags}
+    <div class="details-before-list-group">
+        {if $description}<p class="text-midtone description">{$description}</p>{/if}
+        {if $tags}
+        <p class="text-midtone tags">
+            <strong>{str tag=tags}:</strong> {list_tags owner=$owner tags=$tags}
+        </p>
+        {/if}
+    </div>
     {/if}
     {if $activities.data}
-        <div id="activitytable_{$blockid}" class="list-group list-unstyled">
+        <div id="activitytable_{$blockid}" class="list-group list-unstyled{if $editing} list-group-top-border clearboth{/if}">
             {$activities.tablerows|safe}
         </div>
         {if $activities.pagination}
