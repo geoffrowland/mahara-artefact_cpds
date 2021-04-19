@@ -25,7 +25,7 @@
  */
 
 define('INTERNAL', true);
-define('MENUITEM', 'content/cpds');
+define('MENUITEM', 'create/cpds');
 
 require_once(dirname(dirname(dirname(dirname(__FILE__)))) . '/init.php');
 require_once('pieforms/pieform.php');
@@ -47,6 +47,7 @@ $deleteform = array(
     'elements'   => array(
         'submit' => array(
             'type'  => 'submitcancel',
+            'class' => 'btn-secondary',
             'value' => array(get_string('deleteactivity', 'artefact.cpds'), get_string('cancel')),
             'goto'  => get_config('wwwroot') . '/artefact/cpds/cpd.php?id=' . $todelete->get('parent'),
         ),

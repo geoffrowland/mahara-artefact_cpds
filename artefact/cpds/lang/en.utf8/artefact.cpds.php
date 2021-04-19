@@ -36,6 +36,7 @@ $string['manageactivities'] = 'Manage activities';
 $string['mycpds'] = 'Continuing Professional Development';
 $string['newcpd'] = 'New CPD';
 $string['nocpdsaddone'] = 'No CPD yet. %sAdd one%s!';
+$string['nocpdsselectone'] = 'No CPDs selected. Please create and select CPDs to display.';
 $string['nocpds'] = 'No CPD to display';
 $string['cpd'] = 'CPD';
 $string['cpds'] = 'CPD';

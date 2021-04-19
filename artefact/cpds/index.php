@@ -26,7 +26,7 @@
 
 
 define('INTERNAL', 1);
-define('MENUITEM', 'content/cpds');
+define('MENUITEM', 'create/cpds');
 define('SECTION_PLUGINTYPE', 'artefact');
 define('SECTION_PLUGINNAME', 'cpds');
 define('SECTION_PAGE', 'index');
